@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blackjack | Alpha Bet</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <a href="index.html" class="logo">ALPHA <span>BET</span></a>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="blackjack.html" class="active-nav">Blackjack</a>
+            <a href="slots.html">Slots</a>
+            <a href="roulette.html">Roulette</a>
+        </nav>
+        <div class="stats-bar">
+            <div class="stat-pill">
+                <span>🕒</span>
+                <span id="survival-timer">00:00:00</span>
+            </div>
+            <div class="stat-pill balance">
+                <span>💎</span>
+                <span id="balance-display">0.00</span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="game-page-container">
+            <div class="glass-card">
+                <div class="game-table">
+                    <!-- Dealer -->
+                    <div class="text-center">
+                        <p
+                            style="text-transform: uppercase; font-size: 0.7rem; color: rgba(255,255,255,0.4); margin-bottom: 1rem;">
+                            Dealer Hand</p>
+                        <div id="bj-dealer-hand" class="card-slot" style="min-height: 120px;"></div>
+                    </div>
+
+                    <!-- Player -->
+                    <div class="text-center" style="margin-top: 2rem;">
+                        <div id="bj-player-hand" class="card-slot" style="min-height: 120px; margin-bottom: 1rem;">
+                        </div>
+                        <p style="text-transform: uppercase; font-size: 0.7rem; color: var(--gold);">Your Hand (<span
+                                id="bj-score">0</span>)</p>
+                    </div>
+
+                    <!-- Controls -->
+                    <div class="controls">
+                        <div id="bj-controls-bet">
+                            <input type="number" id="bj-bet-input" value="100" min="1">
+                            <button onclick="bj.deal()" class="btn-primary" style="margin-left: 1rem;">Deal</button>
+                        </div>
+                        <div id="bj-controls-play" style="display: none;">
+                            <button onclick="bj.hit()" class="btn-outline">Hit</button>
+                            <button onclick="bj.stand()" class="btn-primary" style="margin-left: 1rem;">Stand</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="side-panel">
+                <div class="glass-card" style="padding: 1.5rem;">
+                    <h4
+                        style="color: var(--gold); margin-bottom: 1rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem;">
+                        EVENT LOG</h4>
+                    <div id="alpha-log" class="console-log"></div>
+                </div>
+                <div class="glass-card" style="padding: 1.5rem; margin-top: 1rem;">
+                    <h4 style="color: var(--gold); margin-bottom: 0.5rem;">ESTATÍSTICAS</h4>
+                    <p style="font-size: 0.8rem; color: rgba(255,255,255,0.5);">Mult. de Sobrevivência: <span
+                            id="survival-mult">1.00x</span></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Game Over Modal -->
+    <div id="game-over-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h2>BANKRUPTCY</h2>
+            <p style="color: rgba(255,255,255,0.5); margin-bottom: 2rem;">Você faliu... Mas quanto tempo você resistiu?
+            </p>
+            <div id="final-time"
+                style="font-family: 'JetBrains Mono', monospace; font-size: 3rem; color: white; margin-bottom: 2rem;">
+                00:00:00</div>
+            <button onclick="AlphaEngine.resetGame()" class="btn-primary">Tentar Novamente</button>
+        </div>
+    </div>
+
+    <script src="engine.js"></script>
+    <script src="blackjack.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roulette | Alpha Bet</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .roulette-ball {
+            width: 120px;
+            height: 120px;
+            background: var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--navy);
+            border: 4px solid white;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
+            margin-bottom: 2rem;
+        }
+
+        .bet-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            width: 100%;
+        }
+
+        .bet-btn {
+            padding: 1rem;
+            border-radius: 1rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            border: 1px solid var(--glass-border);
+        }
+
+        .btn-red {
+            background: #d32f2f;
+            color: white;
+        }
+
+        .btn-black {
+            background: #212121;
+            color: white;
+        }
+
+        .btn-even {
+            background: var(--navy-light);
+            color: white;
+        }
+
+        .btn-odd {
+            background: var(--navy-light);
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <a href="index.html" class="logo">ALPHA <span>BET</span></a>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="blackjack.html">Blackjack</a>
+            <a href="slots.html">Slots</a>
+            <a href="roulette.html" class="active-nav">Roulette</a>
+        </nav>
+        <div class="stats-bar">
+            <div class="stat-pill">
+                <span>🕒</span>
+                <span id="survival-timer">00:00:00</span>
+            </div>
+            <div class="stat-pill balance">
+                <span>💎</span>
+                <span id="balance-display">0.00</span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="game-page-container">
+            <div class="glass-card">
+                <div class="game-table">
+                    <div id="roulette-ball" class="roulette-ball">?</div>
+
+                    <div class="bet-grid">
+                        <button onclick="roulette.pBet('RED')" class="bet-btn btn-red">RED</button>
+                        <button onclick="roulette.pBet('BLACK')" class="bet-btn btn-black">BLACK</button>
+                        <button onclick="roulette.pBet('EVEN')" class="bet-btn btn-even">EVEN</button>
+                        <button onclick="roulette.pBet('ODD')" class="bet-btn btn-odd">ODD</button>
+                    </div>
+
+                    <div class="controls" style="flex-direction: column; width: 100%;">
+                        <div class="flex items-center gap-4">
+                            <input type="number" id="rl-bet-input" value="100" min="1">
+                            <span style="color: rgba(255,255,255,0.3);">ou em número</span>
+                            <input type="number" id="rl-num-input" placeholder="0-36" min="0" max="36"
+                                style="width: 80px;">
+                            <button onclick="roulette.pBet('NUMBER')" class="btn-primary">Apostar Número</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="side-panel">
+                <div class="glass-card" style="padding: 1.5rem;">
+                    <h4
+                        style="color: var(--gold); margin-bottom: 1rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem;">
+                        CASSINO LOG</h4>
+                    <div id="alpha-log" class="console-log"></div>
+                </div>
+                <div class="glass-card" style="padding: 1.5rem; margin-top: 1rem;">
+                    <h4 style="color: var(--gold); margin-bottom: 0.5rem;">ESTATÍSTICAS</h4>
+                    <p style="font-size: 0.8rem; color: rgba(255,255,255,0.5);">Cada aposta consome 1 minuto de sorte.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Game Over Modal -->
+    <div id="game-over-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h2>BANKRUPTCY</h2>
+            <p style="color: rgba(255,255,255,0.5); margin-bottom: 2rem;">Você faliu... Mas quanto tempo você resistiu?
+            </p>
+            <div id="final-time"
+                style="font-family: 'JetBrains Mono', monospace; font-size: 3rem; color: white; margin-bottom: 2rem;">
+                00:00:00</div>
+            <button onclick="AlphaEngine.resetGame()" class="btn-primary">Tentar Novamente</button>
+        </div>
+    </div>
+
+    <script src="engine.js"></script>
+    <script src="roulette.js"></script>
+</body>
+
+</html>

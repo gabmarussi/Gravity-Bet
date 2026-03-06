@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slots | Alpha Bet</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .slot-reel-container {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .reel-box {
+            width: 100px;
+            height: 140px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid var(--gold);
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <a href="index.html" class="logo">ALPHA <span>BET</span></a>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="blackjack.html">Blackjack</a>
+            <a href="slots.html" class="active-nav">Slots</a>
+            <a href="roulette.html">Roulette</a>
+        </nav>
+        <div class="stats-bar">
+            <div class="stat-pill">
+                <span>🕒</span>
+                <span id="survival-timer">00:00:00</span>
+            </div>
+            <div class="stat-pill balance">
+                <span>💎</span>
+                <span id="balance-display">0.00</span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="game-page-container">
+            <div class="glass-card">
+                <div class="game-table">
+                    <div class="slot-reel-container">
+                        <div id="slot-1" class="reel-box">💎</div>
+                        <div id="slot-2" class="reel-box">🍒</div>
+                        <div id="slot-3" class="reel-box">7️⃣</div>
+                    </div>
+
+                    <div class="controls">
+                        <input type="number" id="slots-bet-input" value="50" min="1">
+                        <button onclick="slots.spin()" class="btn-primary"
+                            style="margin-left: 1rem; padding: 0.8rem 3rem;">SPIN</button>
+                    </div>
+
+                    <div style="margin-top: 2rem; color: rgba(255,255,255,0.4); font-size: 0.8rem; text-align: center;">
+                        <p>🍒x3: 10x | 💎x3: 100x | 7️⃣x3: 50x</p>
+                        <p style="margin-top: 0.5rem; color: var(--gold);">Ganhos são multiplicados pelo seu Tempo de
+                            Sobrevivência!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="side-panel">
+                <div class="glass-card" style="padding: 1.5rem;">
+                    <h4
+                        style="color: var(--gold); margin-bottom: 1rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem;">
+                        LOG DE APOSTAS</h4>
+                    <div id="alpha-log" class="console-log"></div>
+                </div>
+                <div class="glass-card" style="padding: 1.5rem; margin-top: 1rem;">
+                    <h4 style="color: var(--gold); margin-bottom: 0.5rem;">ESTATÍSTICAS</h4>
+                    <p style="font-size: 0.8rem; color: rgba(255,255,255,0.5);">Mult. de Sobrevivência: <span
+                            id="survival-mult">1.00x</span></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Game Over Modal -->
+    <div id="game-over-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h2>BANKRUPTCY</h2>
+            <p style="color: rgba(255,255,255,0.5); margin-bottom: 2rem;">Você faliu... Mas quanto tempo você resistiu?
+            </p>
+            <div id="final-time"
+                style="font-family: 'JetBrains Mono', monospace; font-size: 3rem; color: white; margin-bottom: 2rem;">
+                00:00:00</div>
+            <button onclick="AlphaEngine.resetGame()" class="btn-primary">Tentar Novamente</button>
+        </div>
+    </div>
+
+    <script src="engine.js"></script>
+    <script src="slots.js"></script>
+</body>
+
+</html>

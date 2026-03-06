@@ -4,159 +4,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gravity Casino Suite | V2.0</title>
-    <meta name="description"
-        content="A experiência definitiva de cassino virtual. Blackjack, Slots, Roleta e Poker em um só lugar.">
+    <title>Alpha Bet | Premium Survival Casino</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
     <header>
-        <div class="logo" onclick="showScreen('hub')" style="cursor: pointer;">Gravity Casino</div>
-        <div class="header-tools">
-            <button id="daily-bonus" class="btn-bonus" onclick="collectDailyBonus()">🎁 Bônus</button>
-            <div class="balance-card">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"
-                        fill="#00e5ff" />
-                </svg>
-                <span>Saldo: <span id="balance-amount">1.000,00</span></span>
+        <a href="index.html" class="logo">ALPHA <span>BET</span></a>
+        <nav>
+            <a href="index.html" class="active-nav">Home</a>
+            <a href="blackjack.html">Blackjack</a>
+            <a href="slots.html">Slots</a>
+            <a href="roulette.html">Roulette</a>
+        </nav>
+        <div class="stats-bar">
+            <div class="stat-pill">
+                <span>🕒</span>
+                <span id="survival-timer">00:00:00</span>
+            </div>
+            <div class="stat-pill balance">
+                <span>💎</span>
+                <span id="balance-display">0.00</span>
             </div>
         </div>
     </header>
 
     <main>
-        <!-- HUB SCREEN -->
-        <section id="screen-hub" class="screen active">
-            <div class="hub-grid">
-                <div class="game-card" onclick="showScreen('blackjack')">
-                    <div class="game-icon">🃏</div>
-                    <h3>Blackjack</h3>
-                    <p>Chegue a 21 contra o Dealer</p>
-                </div>
-                <div class="game-card" onclick="showScreen('slots')">
-                    <div class="game-icon">🎰</div>
-                    <h3>Caça-Níqueis</h3>
-                    <p>Tente alinhar os diamantes</p>
-                </div>
-                <div class="game-card" onclick="showScreen('roulette')">
-                    <div class="game-icon">🎡</div>
-                    <h3>Roleta</h3>
-                    <p>A clássica mesa de sorte</p>
-                </div>
-                <div class="game-card" onclick="showScreen('poker')">
-                    <div class="game-icon">🎴</div>
-                    <h3>Video Poker</h3>
-                    <p>A melhor mão de 5 cartas</p>
-                </div>
-            </div>
-        </section>
+        <div class="hero text-center mb-12">
+            <h1 class="text-4xl font-extrabold mb-4" style="font-size: 3.5rem; letter-spacing: -2px;">THE <span
+                    style="color: var(--gold);">ALPHA</span> SUITE</h1>
+            <p style="color: rgba(255,255,255,0.5); font-size: 1.2rem;">Bem-vindo ao Alpha Bet. Onde o tempo é o seu
+                maior multiplicador.</p>
+        </div>
 
-        <!-- BLACKJACK SCREEN -->
-        <section id="screen-blackjack" class="screen">
-            <div class="game-container">
-                <button class="btn-back" onclick="showScreen('hub')">← Voltar</button>
-                <div class="bj-table">
-                    <div class="dealer-area">
-                        <div class="hand-label">Dealer</div>
-                        <div id="bj-dealer-cards" class="card-area"></div>
-                    </div>
-                    <div class="player-area">
-                        <div id="bj-player-cards" class="card-area"></div>
-                        <div class="hand-label">Você (<span id="bj-player-score">0</span>)</div>
-                    </div>
+        <div class="hub-grid">
+            <a href="blackjack.html" class="game-card">
+                <div class="icon">🃏</div>
+                <div>
+                    <h3 class="mb-2">Alpha Blackjack</h3>
+                    <p>Enfrente o dealer na mesa VIP. Limites altos, decisões rápidas.</p>
                 </div>
-                <div class="bet-controls">
-                    <input type="number" id="bj-bet" value="10" min="1">
-                    <div class="bj-actions" id="bj-pre-game">
-                        <button class="btn-primary" onclick="blackjack.deal()">Distribuir</button>
-                    </div>
-                    <div class="bj-actions hidden" id="bj-in-game">
-                        <button class="btn-even" onclick="blackjack.hit()">Hit</button>
-                        <button class="btn-odd" onclick="blackjack.stand()">Stand</button>
-                    </div>
+            </a>
+            <a href="slots.html" class="game-card">
+                <div class="icon">🎰</div>
+                <div>
+                    <h3 class="mb-2">Mega Slots</h3>
+                    <p>O multiplicador de sobrevivência aumenta seus ganhos a cada minuto.</p>
                 </div>
-            </div>
-        </section>
-
-        <!-- SLOTS SCREEN -->
-        <section id="screen-slots" class="screen">
-            <div class="game-container">
-                <button class="btn-back" onclick="showScreen('hub')">← Voltar</button>
-                <div class="slot-machine">
-                    <div class="slot-reel" id="reel-1">🍒</div>
-                    <div class="slot-reel" id="reel-2">🍋</div>
-                    <div class="slot-reel" id="reel-3">💎</div>
+            </a>
+            <a href="roulette.html" class="game-card">
+                <div class="icon">🎡</div>
+                <div>
+                    <h3 class="mb-2">Roulette Royale</h3>
+                    <p>A clássica mesa de sorte com o toque Alpha de sofisticação.</p>
                 </div>
-                <div class="bet-controls">
-                    <input type="number" id="slots-bet" value="5" min="1">
-                    <button class="btn-primary" onclick="slots.spin()">GIRAR</button>
-                </div>
-                <div class="payout-table">
-                    <span>🍒x3: 5x</span> | <span>💎x3: 20x</span> | <span>7️⃣x3: 50x</span>
-                </div>
-            </div>
-        </section>
-
-        <!-- ROULETTE SCREEN -->
-        <section id="screen-roulette" class="screen">
-            <div class="game-container">
-                <button class="btn-back" onclick="showScreen('hub')">← Voltar</button>
-                <div class="roulette-board">
-                    <div id="roulette-result-display" class="roulette-ball">?</div>
-                    <div class="roulette-options">
-                        <div class="opt-row">
-                            <button class="btn-even" onclick="roulette.bet('EVEN')">Par (2x)</button>
-                            <button class="btn-odd" onclick="roulette.bet('ODD')">Ímpar (2x)</button>
-                        </div>
-                        <div class="opt-row">
-                            <button class="btn-red" onclick="roulette.bet('RED')">Vermelho (2x)</button>
-                            <button class="btn-black" onclick="roulette.bet('BLACK')">Preto (2x)</button>
-                        </div>
-                        <div class="num-grid">
-                            <input type="number" id="roulette-num-val" placeholder="Núm (0-36)" min="0" max="36">
-                            <button class="btn-primary" onclick="roulette.bet('NUMBER')">Apostar Número (35x)</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="bet-controls">
-                    <input type="number" id="roulette-bet" value="10" min="1">
-                </div>
-            </div>
-        </section>
-
-        <!-- POKER SCREEN -->
-        <section id="screen-poker" class="screen">
-            <div class="game-container">
-                <button class="btn-back" onclick="showScreen('hub')">← Voltar</button>
-                <div class="poker-table">
-                    <div id="poker-hand" class="card-area"></div>
-                </div>
-                <div class="bet-controls">
-                    <input type="number" id="poker-bet" value="10" min="1">
-                    <div id="poker-actions">
-                        <button id="poker-deal-btn" class="btn-primary" onclick="poker.deal()">Distribuir</button>
-                        <button id="poker-draw-btn" class="btn-primary hidden" onclick="poker.draw()">Trocar
-                            Selecionadas</button>
-                    </div>
-                </div>
-                <div class="poker-info">Clique nas cartas que deseja MANTER</div>
-            </div>
-        </section>
-
-        <!-- LOG CONSOLE -->
-        <section id="event-console" class="console-log">
-            <div class="log-entry">Bem-vindo ao Gravity Casino Suite 2.0. Qual será sua próxima aposta?</div>
-        </section>
+            </a>
+        </div>
     </main>
 
-    <footer>
-        <p>&copy; 2026 Gravity Casino Suite - Multi-Game Update. | <a href="#">GitHub Repo</a></p>
-    </footer>
+    <!-- Game Over Modal -->
+    <div id="game-over-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h2>BANKRUPTCY</h2>
+            <p style="color: rgba(255,255,255,0.5); margin-bottom: 2rem;">Você faliu... Mas quanto tempo você resistiu?
+            </p>
+            <div id="final-time"
+                style="font-family: 'JetBrains Mono', monospace; font-size: 3rem; color: white; margin-bottom: 2rem;">
+                00:00:00</div>
+            <button onclick="AlphaEngine.resetGame()" class="btn-primary">Tentar Novamente</button>
+        </div>
+    </div>
 
-    <script src="script.js"></script>
+    <script src="engine.js"></script>
 </body>
 
 </html>
