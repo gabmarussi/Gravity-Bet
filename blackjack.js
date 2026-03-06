@@ -20,7 +20,7 @@ const bj = {
     deal: function () {
         const betValue = parseFloat(document.getElementById('bj-bet-input').value);
         if (betValue > AlphaEngine.balance || betValue <= 0) {
-            AlphaEngine.addLog("SALDO INSUFICIENTE PARA ESSA APOSTA", "loss");
+            AlphaEngine.addLog("SALDO INSUFICIENTE", "loss");
             return;
         }
 
@@ -32,10 +32,10 @@ const bj = {
         this.dHand = [this.deck.pop(), this.deck.pop()];
 
         document.getElementById('bj-controls-bet').style.display = 'none';
-        document.getElementById('bj-controls-play').style.display = 'block';
+        document.getElementById('bj-controls-play').style.display = 'flex';
 
         this.render(false);
-        AlphaEngine.addLog(`Aposta de ${betValue.toFixed(2)} confirmada. Boa sorte!`);
+        AlphaEngine.addLog(`Partida iniciada. Aposta: R$ ${betValue.toFixed(2)}`);
     },
 
     render: function (showDealer) {
@@ -59,14 +59,19 @@ const bj = {
             `;
         }).join('');
 
-        document.getElementById('bj-score').textContent = this.getVal(this.pHand);
+        const score = this.getVal(this.pHand);
+        document.getElementById('bj-score').textContent = score;
+
+        if (score === 21 && this.pHand.length === 2 && !showDealer) {
+            setTimeout(() => this.stand(), 500); // Auto stand on blackjack
+        }
     },
 
     hit: function () {
         this.pHand.push(this.deck.pop());
         this.render(false);
         if (this.getVal(this.pHand) > 21) {
-            this.end(false, "BURST! Você estourou.");
+            this.end(false, "BURST!");
         }
     },
 
@@ -78,27 +83,36 @@ const bj = {
         const ps = this.getVal(this.pHand);
         const ds = this.getVal(this.dHand);
 
-        if (ds > 21) this.end(true, "DEALER BURST! Você venceu.");
-        else if (ps > ds) this.end(true, "YOU WIN! Mão superior.");
-        else if (ps === ds) this.end(null, "DRAW! Empate.");
-        else this.end(false, "DEALER WINS! Mais sorte na próxima.");
+        if (ds > 21) this.end(true, "DEALER BURST!");
+        else if (ps > ds) this.end(true, "WINNER!");
+        else if (ps === ds) this.end(null, "DRAW");
+        else this.end(false, "DEALER WINS");
     },
 
     end: function (win, msg) {
         const betValue = parseFloat(document.getElementById('bj-bet-input').value);
+        let winAmount = 0;
+
         if (win === true) {
-            AlphaEngine.updateBalance(betValue * 2);
-            AlphaEngine.addLog(`${msg}: +${(betValue * 2).toFixed(2)}`, "win");
+            winAmount = betValue * 2;
+            AlphaEngine.updateBalance(winAmount);
+            AlphaEngine.showResult("WINNER", winAmount, true);
+            AlphaEngine.addLog(`Vitória! Recebeu R$ ${winAmount.toFixed(2)}`, "win");
         } else if (win === null) {
-            AlphaEngine.updateBalance(betValue);
-            AlphaEngine.addLog(msg);
+            winAmount = betValue;
+            AlphaEngine.updateBalance(winAmount);
+            AlphaEngine.showResult("DRAW", winAmount, true);
+            AlphaEngine.addLog("Empate. Aposta devolvida.");
         } else {
-            AlphaEngine.addLog(`${msg}: -${betValue.toFixed(2)}`, "loss");
+            AlphaEngine.showResult("LOSS", betValue, false);
+            AlphaEngine.addLog(`Derrota. Perdeu R$ ${betValue.toFixed(2)}`, "loss");
         }
 
-        document.getElementById('bj-controls-bet').style.display = 'block';
-        document.getElementById('bj-controls-play').style.display = 'none';
-        AlphaEngine.updateUI();
+        setTimeout(() => {
+            document.getElementById('bj-controls-bet').style.display = 'flex';
+            document.getElementById('bj-controls-play').style.display = 'none';
+            AlphaEngine.updateUI();
+        }, 1500);
     }
 };
 

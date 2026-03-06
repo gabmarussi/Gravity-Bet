@@ -1,14 +1,52 @@
 const slots = {
     syms: ['💎', '🍒', '7️⃣', '🍋', '⭐', '🍀'],
+    isSpinning: false,
+    autoBet: false,
+    multiplier: 1,
+
+    init() {
+        console.log("Slots Subsystem Active");
+    },
+
+    setMult(m) {
+        this.multiplier = m;
+        AlphaEngine.addLog(`Multiplicador de aposta ajustado para ${m}x`);
+    },
+
+    toggleAuto() {
+        this.autoBet = !this.autoBet;
+        const btn = document.getElementById('auto-btn');
+        const status = document.getElementById('auto-status');
+        btn.textContent = `AUTO BET: ${this.autoBet ? 'ON' : 'OFF'}`;
+        btn.className = this.autoBet ? 'btn-auto active' : 'btn-auto';
+        status.style.display = this.autoBet ? 'block' : 'none';
+
+        if (this.autoBet && !this.isSpinning) {
+            this.spin();
+        }
+    },
+
     spin: function () {
-        const betValue = parseFloat(document.getElementById('slots-bet-input').value);
-        if (betValue > AlphaEngine.balance || betValue <= 0) {
+        if (this.isSpinning) return;
+
+        const baseBet = parseFloat(document.getElementById('slots-bet-input').value);
+        const totalBet = baseBet * this.multiplier;
+
+        if (totalBet > AlphaEngine.balance || totalBet <= 0) {
             AlphaEngine.addLog("SALDO INSUFICIENTE", "loss");
+            this.autoBet = false;
+            this.toggleAuto();
             return;
         }
 
+        this.isSpinning = true;
         AlphaEngine.startSurvivalTimer();
-        AlphaEngine.updateBalance(-betValue);
+        AlphaEngine.updateBalance(-totalBet);
+
+        // Lever animation
+        const arm = document.getElementById('lever-arm');
+        arm.style.transform = 'rotateX(60deg)';
+        setTimeout(() => arm.style.transform = 'rotateX(0deg)', 300);
 
         const reels = [
             document.getElementById('slot-1'),
@@ -18,7 +56,7 @@ const slots = {
 
         reels.forEach(r => {
             r.classList.add('spinning');
-            r.textContent = '?';
+            r.classList.remove('win');
         });
 
         setTimeout(() => {
@@ -29,24 +67,35 @@ const slots = {
                 return s;
             });
 
-            if (results[0] === results[1] && results[1] === results[2]) {
-                const survivalMult = 1 + (AlphaEngine.survivalTime / 600);
-                let prizeFactor = 10;
-                if (results[0] === '7️⃣') prizeFactor = 50;
-                if (results[0] === '💎') prizeFactor = 100;
+            this.evaluate(results, totalBet);
+            this.isSpinning = false;
 
-                const winAmount = betValue * prizeFactor * survivalMult;
-                AlphaEngine.updateBalance(winAmount);
-                AlphaEngine.addLog(`JACKPOT! ${results[0]}x3: +${winAmount.toFixed(2)}`, "win");
-
-                // Visual effect
-                reels.forEach(r => r.style.borderColor = 'var(--gold-bright)');
-                setTimeout(() => reels.forEach(r => r.style.borderColor = 'var(--gold)'), 2000);
-            } else {
-                AlphaEngine.addLog(`Tente novamente. Perdeu ${betValue.toFixed(2)}`, "loss");
+            if (this.autoBet) {
+                setTimeout(() => this.spin(), 1000);
             }
-            AlphaEngine.updateUI();
-        }, 1000);
+        }, 800);
+    },
+
+    evaluate: function (res, bet) {
+        if (res[0] === res[1] && res[1] === res[2]) {
+            const survivalMult = 1 + (AlphaEngine.survivalTime / 600);
+            let prizeFactor = 10;
+            if (res[0] === '7️⃣') prizeFactor = 50;
+            if (res[0] === '💎') prizeFactor = 100;
+            if (res[0] === '⭐') prizeFactor = 25;
+
+            const winAmount = bet * prizeFactor * survivalMult;
+            AlphaEngine.updateBalance(winAmount);
+            AlphaEngine.showResult("JACKPOT!", winAmount, true);
+            AlphaEngine.addLog(`MEGA WIN: ${res[0]}x3! Ganhou R$ ${winAmount.toFixed(2)}`, "win");
+
+            document.getElementById('slot-1').classList.add('win');
+            document.getElementById('slot-2').classList.add('win');
+            document.getElementById('slot-3').classList.add('win');
+        } else {
+            AlphaEngine.addLog(`Slot Spin: Perdeu R$ ${bet.toFixed(2)}`, "loss");
+        }
+        AlphaEngine.updateUI();
     }
 };
 

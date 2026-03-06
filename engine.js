@@ -3,7 +3,6 @@
  * Handles balance, survival timer, and global UI updates.
  */
 
-// State Management
 const AlphaEngine = {
     balance: parseFloat(localStorage.getItem('alpha_balance')) || 5000.00,
     survivalTime: parseInt(localStorage.getItem('alpha_survival_time')) || 0,
@@ -16,7 +15,8 @@ const AlphaEngine = {
             this.startSurvivalTimer();
         }
         this.setupNavigation();
-        console.log("Alpha Engine Initialized.");
+        this.createResultPopup();
+        console.log("Alpha Engine V3.0 Initialized.");
     },
 
     updateUI() {
@@ -41,7 +41,11 @@ const AlphaEngine = {
         localStorage.setItem('alpha_survival_time', this.survivalTime);
 
         if (this.balance <= 0) {
-            this.gameOver();
+            // Check if we already have a modal showing
+            const modal = document.getElementById('game-over-modal');
+            if (modal && modal.style.display !== 'flex') {
+                this.gameOver();
+            }
         }
     },
 
@@ -66,15 +70,74 @@ const AlphaEngine = {
     updateBalance(amount) {
         this.balance += amount;
         this.updateUI();
+        return this.balance;
     },
 
     addLog(msg, type = "") {
         const log = document.getElementById('alpha-log');
         if (!log) return;
+
         const entry = document.createElement('div');
-        entry.className = `log-entry ${type === 'win' ? 'text-green-400' : (type === 'loss' ? 'text-red-400' : 'text-gray-500')}`;
-        entry.textContent = `> ${msg}`;
+        entry.className = `log-entry ${type === 'win' ? 'text-success' : (type === 'loss' ? 'text-danger' : 'text-gray-500')}`;
+
+        const time = new Date().toLocaleTimeString();
+        entry.innerHTML = `
+            <span style="color: rgba(255,255,255,0.2)">[${time}]</span>
+            <span>${msg}</span>
+            <span style="font-weight: 700">${type.toUpperCase()}</span>
+        `;
+
         log.prepend(entry);
+    },
+
+    createResultPopup() {
+        if (document.getElementById('global-result-popup')) return;
+        const div = document.createElement('div');
+        div.id = 'global-result-popup';
+        div.className = 'result-popup';
+        div.innerHTML = `
+            <div class="result-card" id="result-card">
+                <h2 id="result-title">WIN!</h2>
+                <p id="result-amount">+R$ 0.00</p>
+            </div>
+        `;
+        document.body.appendChild(div);
+    },
+
+    showResult(title, amount, isWin = true) {
+        const popup = document.getElementById('global-result-popup');
+        const card = document.getElementById('result-card');
+        const titleElem = document.getElementById('result-title');
+        const amountElem = document.getElementById('result-amount');
+
+        card.className = `result-card ${isWin ? 'result-win' : 'result-loss'}`;
+        titleElem.textContent = title;
+        amountElem.textContent = (isWin ? '+' : '') + amount.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+        popup.classList.add('show');
+
+        // Play simple sound using Web Audio API
+        this.playSound(isWin ? 880 : 220);
+
+        setTimeout(() => {
+            popup.classList.remove('show');
+        }, 2000);
+    },
+
+    playSound(freq) {
+        try {
+            const ctx = new (window.AudioContext || window.webkitAudioContext)();
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'square';
+            osc.frequency.setValueAtTime(freq, ctx.currentTime);
+            gain.gain.setValueAtTime(0.1, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start();
+            osc.stop(ctx.currentTime + 0.3);
+        } catch (e) { console.log("Audio not supported"); }
     },
 
     gameOver() {
@@ -111,7 +174,5 @@ const AlphaEngine = {
     }
 };
 
-// Auto-init on load
 document.addEventListener('DOMContentLoaded', () => AlphaEngine.init());
-
 window.AlphaEngine = AlphaEngine;

@@ -31,52 +31,88 @@
     </header>
 
     <main>
-        <div class="hero text-center mb-12">
-            <h1 class="text-4xl font-extrabold mb-4" style="font-size: 3.5rem; letter-spacing: -2px;">THE <span
-                    style="color: var(--gold);">ALPHA</span> SUITE</h1>
-            <p style="color: rgba(255,255,255,0.5); font-size: 1.2rem;">Bem-vindo ao Alpha Bet. Onde o tempo é o seu
-                maior multiplicador.</p>
-        </div>
+        <section class="hero">
+            <h1>THE ALPHA <span style="color: var(--gold);">SUITE</span></h1>
+            <p
+                style="color: rgba(255,255,255,0.4); font-size: 1.1rem; max-width: 600px; margin: 0 auto; line-height: 1.6;">
+                Onde a elite testa seus limites. Um cassino virtual focado em sobrevivência,
+                onde seu tempo de jogo é a sua maior vantagem competitiva.
+            </p>
+        </section>
 
-        <div class="hub-grid">
+        <section class="hub-grid">
             <a href="blackjack.html" class="game-card">
                 <div class="icon">🃏</div>
                 <div>
-                    <h3 class="mb-2">Alpha Blackjack</h3>
-                    <p>Enfrente o dealer na mesa VIP. Limites altos, decisões rápidas.</p>
+                    <h3 style="color: var(--gold); font-size: 1.5rem; margin-bottom: 0.5rem;">Blackjack VIP</h3>
+                    <p style="color: rgba(255,255,255,0.5); font-size: 0.9rem;">Estratégia pura contra a casa. Colete
+                        vitórias consecutivas para maximizar ganhos.</p>
                 </div>
+                <div
+                    style="margin-top: auto; color: var(--gold); font-weight: 800; font-size: 0.7rem; letter-spacing: 2px;">
+                    JOGAR AGORA →</div>
             </a>
+
             <a href="slots.html" class="game-card">
                 <div class="icon">🎰</div>
                 <div>
-                    <h3 class="mb-2">Mega Slots</h3>
-                    <p>O multiplicador de sobrevivência aumenta seus ganhos a cada minuto.</p>
+                    <h3 style="color: var(--gold); font-size: 1.5rem; margin-bottom: 0.5rem;">Mega Slots</h3>
+                    <p style="color: rgba(255,255,255,0.5); font-size: 0.9rem;">Acione a alavanca e deixe o tempo
+                        trabalhar por você. Multiplicadores progressivos ativados.</p>
                 </div>
+                <div
+                    style="margin-top: auto; color: var(--gold); font-weight: 800; font-size: 0.7rem; letter-spacing: 2px;">
+                    JOGAR AGORA →</div>
             </a>
+
             <a href="roulette.html" class="game-card">
                 <div class="icon">🎡</div>
                 <div>
-                    <h3 class="mb-2">Roulette Royale</h3>
-                    <p>A clássica mesa de sorte com o toque Alpha de sofisticação.</p>
+                    <h3 style="color: var(--gold); font-size: 1.5rem; margin-bottom: 0.5rem;">Roulette Royale</h3>
+                    <p style="color: rgba(255,255,255,0.5); font-size: 0.9rem;">A sorte favorece os audazes.
+                        Visualização em tempo real e imersão total.</p>
                 </div>
+                <div
+                    style="margin-top: auto; color: var(--gold); font-weight: 800; font-size: 0.7rem; letter-spacing: 2px;">
+                    JOGAR AGORA →</div>
             </a>
-        </div>
+        </section>
+
+        <section
+            style="margin-top: 6rem; text-align: center; border-top: 1px solid var(--glass-border); padding-top: 4rem;">
+            <div
+                style="display: inline-block; background: var(--glass); padding: 2rem 4rem; border-radius: 2rem; border: 1px solid var(--glass-border);">
+                <p
+                    style="font-size: 0.8rem; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1rem;">
+                    Seu Progresso de Sobrevivência</p>
+                <div style="font-size: 2rem; font-weight: 900; color: white;" id="survival-timer-hero">00:00:00</div>
+                <p style="font-size: 0.9rem; color: var(--gold); margin-top: 0.5rem;">Multiplicador Global: <span
+                        id="survival-mult">1.00x</span></p>
+            </div>
+        </section>
     </main>
 
     <!-- Game Over Modal -->
     <div id="game-over-modal" class="modal-overlay">
         <div class="modal-content">
             <h2>BANKRUPTCY</h2>
-            <p style="color: rgba(255,255,255,0.5); margin-bottom: 2rem;">Você faliu... Mas quanto tempo você resistiu?
-            </p>
+            <p style="color: rgba(255,255,255,0.5); margin-bottom: 2rem;">As portas do cassino se fecharam. Tente
+                novamente.</p>
             <div id="final-time"
                 style="font-family: 'JetBrains Mono', monospace; font-size: 3rem; color: white; margin-bottom: 2rem;">
                 00:00:00</div>
-            <button onclick="AlphaEngine.resetGame()" class="btn-primary">Tentar Novamente</button>
+            <button onclick="AlphaEngine.resetGame()" class="btn-main">Reiniciar</button>
         </div>
     </div>
 
     <script src="engine.js"></script>
+    <script>
+        // Hero specific UI sync
+        setInterval(() => {
+            const h = document.getElementById('survival-timer-hero');
+            if (h) h.textContent = AlphaEngine.formatTime(AlphaEngine.survivalTime);
+        }, 1000);
+    </script>
 </body>
 
 </html>

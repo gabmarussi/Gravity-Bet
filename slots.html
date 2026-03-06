@@ -7,24 +7,40 @@
     <title>Slots | Alpha Bet</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        .slot-reel-container {
+        .reel-area {
             display: flex;
-            gap: 1.5rem;
-            justify-content: center;
-            margin-bottom: 2rem;
+            align-items: center;
+            gap: 2rem;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 3rem;
+            border-radius: 4rem;
+            border: 2px solid var(--glass-border);
+            box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.5);
         }
 
-        .reel-box {
-            width: 100px;
-            height: 140px;
-            background: rgba(0, 0, 0, 0.5);
-            border: 2px solid var(--gold);
-            border-radius: 1rem;
+        .reel-container {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .slot-box {
+            width: 120px;
+            height: 160px;
+            background: var(--navy);
+            border: 3px solid var(--glass-border);
+            border-radius: 1.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 4rem;
-            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
+            font-size: 5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slot-box.win {
+            border-color: var(--gold);
+            animation: pulse 0.5s infinite;
         }
     </style>
 </head>
@@ -52,40 +68,83 @@
     </header>
 
     <main>
-        <div class="game-page-container">
+        <div class="game-layout">
             <div class="glass-card">
-                <div class="game-table">
-                    <div class="slot-reel-container">
-                        <div id="slot-1" class="reel-box">💎</div>
-                        <div id="slot-2" class="reel-box">🍒</div>
-                        <div id="slot-3" class="reel-box">7️⃣</div>
+                <div class="game-container">
+                    <div class="reel-area">
+                        <div class="reel-container">
+                            <div id="slot-1" class="slot-box">💎</div>
+                            <div id="slot-2" class="slot-box">🍒</div>
+                            <div id="slot-3" class="slot-box">7️⃣</div>
+                        </div>
+
+                        <!-- The Lever -->
+                        <div class="lever-container" onclick="slots.spin()">
+                            <div class="lever-base"></div>
+                            <div class="lever-arm" id="lever-arm">
+                                <div class="lever-knob"></div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="controls">
-                        <input type="number" id="slots-bet-input" value="50" min="1">
-                        <button onclick="slots.spin()" class="btn-primary"
-                            style="margin-left: 1rem; padding: 0.8rem 3rem;">SPIN</button>
-                    </div>
+                    <div class="bet-controls">
+                        <div class="flex flex-col gap-4">
+                            <div class="multiplier-buttons">
+                                <button onclick="slots.setMult(1)" class="btn-mult">1x</button>
+                                <button onclick="slots.setMult(2)" class="btn-mult">2x</button>
+                                <button onclick="slots.setMult(5)" class="btn-mult">5x</button>
+                                <button onclick="slots.setMult(10)" class="btn-mult">10x</button>
+                            </div>
+                            <div class="input-group">
+                                <label>Aposta Base</label>
+                                <input type="number" id="slots-bet-input" value="10" min="1">
+                            </div>
+                        </div>
 
-                    <div style="margin-top: 2rem; color: rgba(255,255,255,0.4); font-size: 0.8rem; text-align: center;">
-                        <p>🍒x3: 10x | 💎x3: 100x | 7️⃣x3: 50x</p>
-                        <p style="margin-top: 0.5rem; color: var(--gold);">Ganhos são multiplicados pelo seu Tempo de
-                            Sobrevivência!</p>
+                        <div class="flex flex-col gap-2">
+                            <button id="spin-btn" onclick="slots.spin()" class="btn-main"
+                                style="padding: 1.5rem 4rem;">SPIN</button>
+                            <button id="auto-btn" onclick="slots.toggleAuto()" class="btn-auto">AUTO BET: OFF</button>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="side-panel">
-                <div class="glass-card" style="padding: 1.5rem;">
-                    <h4
-                        style="color: var(--gold); margin-bottom: 1rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem;">
-                        LOG DE APOSTAS</h4>
-                    <div id="alpha-log" class="console-log"></div>
+            <div class="page-footer-container">
+                <div class="log-section">
+                    <div class="log-header">
+                        <h3>HISTÓRICO DE SPINS</h3>
+                        <span id="auto-status" style="color: var(--success); font-weight: 800; display: none;">MODO
+                            AUTOMÁTICO ATIVO</span>
+                    </div>
+                    <div id="alpha-log" class="log-window"></div>
                 </div>
-                <div class="glass-card" style="padding: 1.5rem; margin-top: 1rem;">
-                    <h4 style="color: var(--gold); margin-bottom: 0.5rem;">ESTATÍSTICAS</h4>
-                    <p style="font-size: 0.8rem; color: rgba(255,255,255,0.5);">Mult. de Sobrevivência: <span
-                            id="survival-mult">1.00x</span></p>
+
+                <div class="info-section">
+                    <h3 style="color: var(--gold); margin-bottom: 1rem;">TABELA DE PAGAMENTOS</h3>
+                    <div
+                        style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; color: rgba(255,255,255,0.7); font-size: 0.8rem;">
+                        <div
+                            style="background: var(--glass); padding: 0.8rem; border-radius: 1rem; border: 1px solid var(--glass-border);">
+                            <span style="font-size: 1.2rem;">💎 💎 💎</span><br><b>100x</b> Aposta
+                        </div>
+                        <div
+                            style="background: var(--glass); padding: 0.8rem; border-radius: 1rem; border: 1px solid var(--glass-border);">
+                            <span style="font-size: 1.2rem;">7️⃣ 7️⃣ 7️⃣</span><br><b>50x</b> Aposta
+                        </div>
+                        <div
+                            style="background: var(--glass); padding: 0.8rem; border-radius: 1rem; border: 1px solid var(--glass-border);">
+                            <span style="font-size: 1.2rem;">🍒 🍒 🍒</span><br><b>10x</b> Aposta
+                        </div>
+                        <div
+                            style="background: var(--glass); padding: 0.8rem; border-radius: 1rem; border: 1px solid var(--glass-border);">
+                            <span style="font-size: 1.2rem;">⭐ ⭐ ⭐</span><br><b>25x</b> Aposta
+                        </div>
+                    </div>
+                    <p style="margin-top: 1.5rem; font-size: 0.75rem; color: var(--gold); line-height: 1.4;">
+                        <b>SURVIVAL MULTIPLIER:</b> Seus ganhos finais são multiplicados por <span
+                            id="survival-mult">1.00x</span> baseado no seu tempo de jogo!
+                    </p>
                 </div>
             </div>
         </div>
@@ -95,12 +154,12 @@
     <div id="game-over-modal" class="modal-overlay">
         <div class="modal-content">
             <h2>BANKRUPTCY</h2>
-            <p style="color: rgba(255,255,255,0.5); margin-bottom: 2rem;">Você faliu... Mas quanto tempo você resistiu?
-            </p>
+            <p style="color: rgba(255,255,255,0.5); margin-bottom: 2rem;">As máquinas pararam. Recarregue seu sistema
+                Alpha.</p>
             <div id="final-time"
                 style="font-family: 'JetBrains Mono', monospace; font-size: 3rem; color: white; margin-bottom: 2rem;">
                 00:00:00</div>
-            <button onclick="AlphaEngine.resetGame()" class="btn-primary">Tentar Novamente</button>
+            <button onclick="AlphaEngine.resetGame()" class="btn-main">Reiniciar</button>
         </div>
     </div>
 
