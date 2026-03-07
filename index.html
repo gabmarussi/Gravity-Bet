@@ -107,7 +107,11 @@
 
     <script src="engine.js"></script>
     <script>
-        // Hero specific UI sync
+        /**
+         * Sincronização específica da Home para exibir o cronômetro no "Hero"
+         * Isso garante que o contador gigante no meio da página esteja sempre 
+         * alinhado com o motor do jogo (AlphaEngine).
+         */
         setInterval(() => {
             const h = document.getElementById('survival-timer-hero');
             if (h) h.textContent = AlphaEngine.formatTime(AlphaEngine.survivalTime);

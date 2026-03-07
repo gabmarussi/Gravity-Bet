@@ -6,43 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Slots | Alpha Bet</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        .reel-area {
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-            background: rgba(0, 0, 0, 0.4);
-            padding: 3rem;
-            border-radius: 4rem;
-            border: 2px solid var(--glass-border);
-            box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.5);
-        }
-
-        .reel-container {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .slot-box {
-            width: 120px;
-            height: 160px;
-            background: var(--navy);
-            border: 3px solid var(--glass-border);
-            border-radius: 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 5rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .slot-box.win {
-            border-color: var(--gold);
-            animation: pulse 0.5s infinite;
-        }
-    </style>
+    <!-- Estilos específicos foram movidos para o style.css global para melhor organização -->
 </head>
 
 <body>
@@ -73,9 +37,21 @@
                 <div class="game-container">
                     <div class="reel-area">
                         <div class="reel-container">
-                            <div id="slot-1" class="slot-box">💎</div>
-                            <div id="slot-2" class="slot-box">🍒</div>
-                            <div id="slot-3" class="slot-box">7️⃣</div>
+                            <div id="slot-1-window" class="reel-window">
+                                <div id="slot-1-strip" class="reel-strip">
+                                    <div class="reel-symbol">💎</div>
+                                </div>
+                            </div>
+                            <div id="slot-2-window" class="reel-window">
+                                <div id="slot-2-strip" class="reel-strip">
+                                    <div class="reel-symbol">🍒</div>
+                                </div>
+                            </div>
+                            <div id="slot-3-window" class="reel-window">
+                                <div id="slot-3-strip" class="reel-strip">
+                                    <div class="reel-symbol">7️⃣</div>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- The Lever -->
@@ -87,8 +63,9 @@
                         </div>
                     </div>
 
+                    <!-- Controles de Aposta -->
                     <div class="bet-controls">
-                        <div class="flex flex-col gap-4">
+                        <div style="display: flex; flex-direction: column; gap: 1rem;">
                             <div class="multiplier-buttons">
                                 <button onclick="slots.setMult(1)" class="btn-mult">1x</button>
                                 <button onclick="slots.setMult(2)" class="btn-mult">2x</button>
@@ -101,9 +78,8 @@
                             </div>
                         </div>
 
-                        <div class="flex flex-col gap-2">
-                            <button id="spin-btn" onclick="slots.spin()" class="btn-main"
-                                style="padding: 1.5rem 4rem;">SPIN</button>
+                        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                            <button id="spin-btn" onclick="slots.spin()" class="btn-main" style="padding: 1.5rem 4rem;">SPIN</button>
                             <button id="auto-btn" onclick="slots.toggleAuto()" class="btn-auto">AUTO BET: OFF</button>
                         </div>
                     </div>
@@ -121,30 +97,31 @@
                 </div>
 
                 <div class="info-section">
-                    <h3 style="color: var(--gold); margin-bottom: 1rem;">TABELA DE PAGAMENTOS</h3>
-                    <div
-                        style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; color: rgba(255,255,255,0.7); font-size: 0.8rem;">
-                        <div
-                            style="background: var(--glass); padding: 0.8rem; border-radius: 1rem; border: 1px solid var(--glass-border);">
-                            <span style="font-size: 1.2rem;">💎 💎 💎</span><br><b>100x</b> Aposta
+                    <h3 style="color: var(--gold); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <span>🎰</span> TABELA DE PAGAMENTOS
+                    </h3>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; color: rgba(255,255,255,0.7); font-size: 0.8rem; margin-bottom: 2rem;">
+                        <div style="background: var(--glass); padding: 1rem; border-radius: 1.5rem; border: 1px solid var(--glass-border); text-align: center;">
+                            <span style="font-size: 1.5rem;">💎 💎 💎</span><br><b style="color: var(--gold); font-size: 1.2rem;">100x</b>
                         </div>
-                        <div
-                            style="background: var(--glass); padding: 0.8rem; border-radius: 1rem; border: 1px solid var(--glass-border);">
-                            <span style="font-size: 1.2rem;">7️⃣ 7️⃣ 7️⃣</span><br><b>50x</b> Aposta
+                        <div style="background: var(--glass); padding: 1rem; border-radius: 1.5rem; border: 1px solid var(--glass-border); text-align: center;">
+                            <span style="font-size: 1.5rem;">7️⃣ 7️⃣ 7️⃣</span><br><b style="color: var(--gold); font-size: 1.2rem;">50x</b>
                         </div>
-                        <div
-                            style="background: var(--glass); padding: 0.8rem; border-radius: 1rem; border: 1px solid var(--glass-border);">
-                            <span style="font-size: 1.2rem;">🍒 🍒 🍒</span><br><b>10x</b> Aposta
+                        <div style="background: var(--glass); padding: 1rem; border-radius: 1.5rem; border: 1px solid var(--glass-border); text-align: center;">
+                            <span style="font-size: 1.5rem;">🍒 🍒 🍒</span><br><b style="color: var(--gold); font-size: 1.2rem;">10x</b>
                         </div>
-                        <div
-                            style="background: var(--glass); padding: 0.8rem; border-radius: 1rem; border: 1px solid var(--glass-border);">
-                            <span style="font-size: 1.2rem;">⭐ ⭐ ⭐</span><br><b>25x</b> Aposta
+                        <div style="background: var(--glass); padding: 1rem; border-radius: 1.5rem; border: 1px solid var(--glass-border); text-align: center;">
+                            <span style="font-size: 1.5rem;">⭐ ⭐ ⭐</span><br><b style="color: var(--gold); font-size: 1.2rem;">25x</b>
                         </div>
                     </div>
-                    <p style="margin-top: 1.5rem; font-size: 0.75rem; color: var(--gold); line-height: 1.4;">
-                        <b>SURVIVAL MULTIPLIER:</b> Seus ganhos finais são multiplicados por <span
-                            id="survival-mult">1.00x</span> baseado no seu tempo de jogo!
-                    </p>
+
+                    <div style="background: var(--gold); color: var(--navy); padding: 1.5rem; border-radius: 1.5rem; position: relative; overflow: hidden;">
+                        <div style="position: absolute; right: -10px; bottom: -10px; font-size: 4rem; opacity: 0.1;">🕒</div>
+                        <p style="font-size: 0.7rem; font-weight: 800; text-transform: uppercase; margin-bottom: 0.3rem;">Survivor Bonus</p>
+                        <p style="font-size: 1.5rem; font-weight: 900;" id="survival-mult">1.00x</p>
+                        <p style="font-size: 0.75rem; opacity: 0.8; margin-top: 0.5rem;">Ganhos multiplicados pelo tempo!</p>
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,10 +1,12 @@
 /**
- * ALPHA ENGINE - Shared Core logic for Alpha Bet Suite
- * Handles balance, survival timer, and global UI updates.
+ * ALPHA ENGINE - Núcleo Compartilhado para a Alpha Bet Suite
+ * Gerencia saldo, temporizador de sobrevivência e atualizações globais da UI.
  */
 
 const AlphaEngine = {
+    // Carrega o saldo ou define o valor inicial de R$ 5000,00
     balance: parseFloat(localStorage.getItem('alpha_balance')) || 5000.00,
+    // Tempo total jogado em segundos
     survivalTime: parseInt(localStorage.getItem('alpha_survival_time')) || 0,
     timerInterval: null,
     gameStarted: localStorage.getItem('alpha_game_started') === 'true',
@@ -16,9 +18,12 @@ const AlphaEngine = {
         }
         this.setupNavigation();
         this.createResultPopup();
-        console.log("Alpha Engine V3.0 Initialized.");
     },
 
+    /**
+     * Atualiza todos os elementos visuais de saldo e tempo na página.
+     * Também salva o progresso atual no LocalStorage do navegador.
+     */
     updateUI() {
         const balanceDisplay = document.getElementById('balance-display');
         const timerDisplay = document.getElementById('survival-timer');
@@ -33,6 +38,7 @@ const AlphaEngine = {
         }
 
         if (multDisplay) {
+            // O multiplicador aumenta a cada 10 minutos (600 segundos) de jogo
             const mult = 1 + (this.survivalTime / 600);
             multDisplay.textContent = mult.toFixed(2) + 'x';
         }
@@ -40,15 +46,18 @@ const AlphaEngine = {
         localStorage.setItem('alpha_balance', this.balance);
         localStorage.setItem('alpha_survival_time', this.survivalTime);
 
+        // Verifica estado de falência
         if (this.balance <= 0) {
-            // Check if we already have a modal showing
             const modal = document.getElementById('game-over-modal');
-            if (modal && modal.style.display !== 'flex') {
+            if (modal && !modal.classList.contains('active')) {
                 this.gameOver();
             }
         }
     },
 
+    /**
+     * Converte segundos para formato HH:MM:SS
+     */
     formatTime(sec) {
         const h = Math.floor(sec / 3600);
         const m = Math.floor((sec % 3600) / 60);
@@ -56,6 +65,9 @@ const AlphaEngine = {
         return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
     },
 
+    /**
+     * Inicia o contador de tempo de sobrevivência
+     */
     startSurvivalTimer() {
         if (this.timerInterval) return;
         this.gameStarted = true;
@@ -67,12 +79,19 @@ const AlphaEngine = {
         }, 1000);
     },
 
+    /**
+     * Modifica o saldo do jogador
+     * @param {number} amount - Valor a ser adicionado ou subtraído
+     */
     updateBalance(amount) {
         this.balance += amount;
         this.updateUI();
         return this.balance;
     },
 
+    /**
+     * Adiciona uma entrada no log de atividades do jogo
+     */
     addLog(msg, type = "") {
         const log = document.getElementById('alpha-log');
         if (!log) return;
@@ -90,6 +109,9 @@ const AlphaEngine = {
         log.prepend(entry);
     },
 
+    /**
+     * Cria o elemento de popup de resultado que aparece no centro da tela
+     */
     createResultPopup() {
         if (document.getElementById('global-result-popup')) return;
         const div = document.createElement('div');
@@ -97,13 +119,16 @@ const AlphaEngine = {
         div.className = 'result-popup';
         div.innerHTML = `
             <div class="result-card" id="result-card">
-                <h2 id="result-title">WIN!</h2>
+                <h2 id="result-title">VITÓRIA!</h2>
                 <p id="result-amount">+R$ 0.00</p>
             </div>
         `;
         document.body.appendChild(div);
     },
 
+    /**
+     * Exibe o popup de resultado de uma rodada
+     */
     showResult(title, amount, isWin = true) {
         const popup = document.getElementById('global-result-popup');
         const card = document.getElementById('result-card');
@@ -115,8 +140,6 @@ const AlphaEngine = {
         amountElem.textContent = (isWin ? '+' : '') + amount.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
         popup.classList.add('show');
-
-        // Play simple sound using Web Audio API
         this.playSound(isWin ? 880 : 220);
 
         setTimeout(() => {
@@ -124,6 +147,10 @@ const AlphaEngine = {
         }, 2000);
     },
 
+    /**
+     * Gera um som simples usando a API de Áudio do navegador (sem arquivos externos)
+     * @param {number} freq - Frequência do som em Hz
+     */
     playSound(freq) {
         try {
             const ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -137,9 +164,12 @@ const AlphaEngine = {
             gain.connect(ctx.destination);
             osc.start();
             osc.stop(ctx.currentTime + 0.3);
-        } catch (e) { console.log("Audio not supported"); }
+        } catch (e) { /* Navegador pode bloquear áudio sem interação prévia */ }
     },
 
+    /**
+     * Finaliza o jogo quando o saldo acaba
+     */
     gameOver() {
         clearInterval(this.timerInterval);
         this.gameStarted = false;
@@ -147,12 +177,15 @@ const AlphaEngine = {
 
         const modal = document.getElementById('game-over-modal');
         if (modal) {
-            modal.style.display = 'flex';
+            modal.classList.add('active');
             const finalTime = document.getElementById('final-time');
             if (finalTime) finalTime.textContent = this.formatTime(this.survivalTime);
         }
     },
 
+    /**
+     * Reinicia todos os dados do jogador
+     */
     resetGame() {
         this.balance = 5000.00;
         this.survivalTime = 0;
@@ -163,6 +196,9 @@ const AlphaEngine = {
         window.location.href = 'index.html';
     },
 
+    /**
+     * Sincroniza a classe ativa do menu de navegação
+     */
     setupNavigation() {
         const currentPath = window.location.pathname;
         document.querySelectorAll('nav a').forEach(link => {

@@ -1,22 +1,54 @@
-const bj = {
-    deck: [], pHand: [], dHand: [],
+/**
+ * BLACKJACK CORE - Lógica para o jogo Blackjack VIP
+ * Gerencia baralhos, mãos e avaliações de pontuação
+ */
 
+const bj = {
+    deck: [],       // Baralho completo (52 cartas)
+    pHand: [],      // Mão do jogador
+    dHand: [],      // Mão do dealer (casa)
+
+    /**
+     * Cria e embaralha um novo baralho
+     * @returns {Array} Baralho de 52 cartas [{suit, val}]
+     */
     createDeck: () => {
-        const s = ['♥', '♦', '♣', '♠'], v = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
-        let d = []; for (let suit of s) for (let val of v) d.push({ suit, val });
+        const suits = ['♥', '♦', '♣', '♠'];
+        const values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
+        let d = []; 
+        for (let suit of suits) {
+            for (let val of values) {
+                d.push({ suit, val });
+            }
+        }
         return d.sort(() => Math.random() - 0.5);
     },
 
+    /**
+     * Calcula o valor da pontuação de uma mão
+     * Considera o Ás como 11 ou 1, dependendo do que for mais favorável para não estourar (burst).
+     */
     getVal: (hand) => {
         let score = 0, aces = 0;
         hand.forEach(c => {
-            if (c.val === 'A') aces++;
-            else score += (['J', 'Q', 'K'].includes(c.val) ? 10 : parseInt(c.val));
+            if (c.val === 'A') {
+                aces++;
+            } else {
+                // Cartas J, Q, K valem 10, o restante vale o valor númerico.
+                score += (['J', 'Q', 'K'].includes(c.val) ? 10 : parseInt(c.val));
+            }
         });
-        for (let i = 0; i < aces; i++) score += (score + 11 <= 21 ? 11 : 1);
+        
+        // Adiciona o valor dos Ases estrategicamente
+        for (let i = 0; i < aces; i++) {
+            score += (score + 11 <= 21 ? 11 : 1);
+        }
         return score;
     },
 
+    /**
+     * Inicia a rodada coletando a aposta e distribuindo cartas
+     */
     deal: function () {
         const betValue = parseFloat(document.getElementById('bj-bet-input').value);
         if (betValue > AlphaEngine.balance || betValue <= 0) {
@@ -31,6 +63,7 @@ const bj = {
         this.pHand = [this.deck.pop(), this.deck.pop()];
         this.dHand = [this.deck.pop(), this.deck.pop()];
 
+        // Alterna entre UI de aposta e UI de jogo
         document.getElementById('bj-controls-bet').style.display = 'none';
         document.getElementById('bj-controls-play').style.display = 'flex';
 
@@ -38,35 +71,56 @@ const bj = {
         AlphaEngine.addLog(`Partida iniciada. Aposta: R$ ${betValue.toFixed(2)}`);
     },
 
+    /**
+     * Atualiza os elementos visuais das cartas e a pontuação na tela
+     * @param {boolean} showDealer - Define se o dealer revela sua carta oculta
+     */
     render: function (showDealer) {
         const pElem = document.getElementById('bj-player-hand');
         const dElem = document.getElementById('bj-dealer-hand');
+        const dScoreWrapper = document.getElementById('bj-dealer-score-wrapper');
+        const dScoreElem = document.getElementById('bj-dealer-score');
 
+        // Renderiza a mão do jogador
         pElem.innerHTML = this.pHand.map(c => `
-            <div class="card ${['♥', '♦'].includes(c.suit) ? 'red' : ''}">
-                ${c.val}${c.suit}
+            <div class="card ${['♥', '♦'].includes(c.suit) ? 'red' : ''}" data-suit="${c.suit}">
+                <span>${c.val}</span>
+                <span style="align-self: flex-end">${c.val}</span>
             </div>
         `).join('');
 
+        // Renderiza a mão do dealer (ocultando a primeira carta se necessário)
         dElem.innerHTML = this.dHand.map((c, i) => {
             if (i === 0 && !showDealer) {
-                return `<div class="card hidden-card">?</div>`;
+                return `<div class="card hidden-card"></div>`;
             }
             return `
-                <div class="card ${['♥', '♦'].includes(c.suit) ? 'red' : ''}">
-                    ${c.val}${c.suit}
+                <div class="card ${['♥', '♦'].includes(c.suit) ? 'red' : ''}" data-suit="${c.suit}">
+                    <span>${c.val}</span>
+                    <span style="align-self: flex-end">${c.val}</span>
                 </div>
             `;
         }).join('');
 
-        const score = this.getVal(this.pHand);
-        document.getElementById('bj-score').textContent = score;
+        const pScore = this.getVal(this.pHand);
+        document.getElementById('bj-score').textContent = pScore;
 
-        if (score === 21 && this.pHand.length === 2 && !showDealer) {
-            setTimeout(() => this.stand(), 500); // Auto stand on blackjack
+        if (showDealer) {
+            dScoreWrapper.style.display = 'inline-block';
+            dScoreElem.textContent = this.getVal(this.dHand);
+        } else {
+            dScoreWrapper.style.display = 'none';
+        }
+
+        // Parada automática se fizer Blackjack (21 nas duas primeiras cartas)
+        if (pScore === 21 && this.pHand.length === 2 && !showDealer) {
+            setTimeout(() => this.stand(), 500);
         }
     },
 
+    /**
+     * Jogador pede mais uma carta ao baralho
+     */
     hit: function () {
         this.pHand.push(this.deck.pop());
         this.render(false);
@@ -75,6 +129,9 @@ const bj = {
         }
     },
 
+    /**
+     * Dealer revela suas cartas e joga até atingir o mínimo de 17 pontos
+     */
     stand: function () {
         while (this.getVal(this.dHand) < 17) {
             this.dHand.push(this.deck.pop());
@@ -83,12 +140,16 @@ const bj = {
         const ps = this.getVal(this.pHand);
         const ds = this.getVal(this.dHand);
 
+        // Avaliação do vencedor
         if (ds > 21) this.end(true, "DEALER BURST!");
-        else if (ps > ds) this.end(true, "WINNER!");
-        else if (ps === ds) this.end(null, "DRAW");
-        else this.end(false, "DEALER WINS");
+        else if (ps > ds) this.end(true, "VENCEDOR!");
+        else if (ps === ds) this.end(null, "EMPATE");
+        else this.end(false, "A CASA VENCE");
     },
 
+    /**
+     * Finaliza a rodada, calcula prêmio e reseta UI após atraso
+     */
     end: function (win, msg) {
         const betValue = parseFloat(document.getElementById('bj-bet-input').value);
         let winAmount = 0;
@@ -96,15 +157,15 @@ const bj = {
         if (win === true) {
             winAmount = betValue * 2;
             AlphaEngine.updateBalance(winAmount);
-            AlphaEngine.showResult("WINNER", winAmount, true);
+            AlphaEngine.showResult(msg, winAmount, true);
             AlphaEngine.addLog(`Vitória! Recebeu R$ ${winAmount.toFixed(2)}`, "win");
         } else if (win === null) {
             winAmount = betValue;
             AlphaEngine.updateBalance(winAmount);
-            AlphaEngine.showResult("DRAW", winAmount, true);
+            AlphaEngine.showResult("EMPATE", winAmount, true); // Devolve o valor
             AlphaEngine.addLog("Empate. Aposta devolvida.");
         } else {
-            AlphaEngine.showResult("LOSS", betValue, false);
+            AlphaEngine.showResult(msg, betValue, false);
             AlphaEngine.addLog(`Derrota. Perdeu R$ ${betValue.toFixed(2)}`, "loss");
         }
 

@@ -35,35 +35,33 @@
             <div class="glass-card">
                 <div class="game-container">
                     <div class="text-center" style="width: 100%;">
-                        <div
-                            style="background: rgba(0,0,0,0.2); border-radius: 2rem; padding: 2rem; margin-bottom: 2rem;">
                             <p
-                                style="text-transform: uppercase; font-size: 0.7rem; color: rgba(255,255,255,0.4); margin-bottom: 1rem;">
-                                Dealer Hand</p>
-                            <div id="bj-dealer-hand" class="card-slot" style="min-height: 120px;"></div>
-                        </div>
+                                style="text-transform: uppercase; font-size: 0.7rem; color: rgba(255,255,255,0.4); margin-bottom: 1rem; display: flex; justify-content: center; gap: 1rem; align-items: center;">
+                                Dealer Hand <span id="bj-dealer-score-wrapper" style="display: none; background: var(--navy); padding: 2px 8px; border-radius: 4px; color: white;">SCORE: <span id="bj-dealer-score">0</span></span></p>
+                            <div id="bj-dealer-hand" class="card-slot" style="min-height: 160px;"></div>
 
                         <div
                             style="background: rgba(212, 175, 55, 0.05); border-radius: 2rem; padding: 2rem; border: 1px solid rgba(212, 175, 55, 0.1);">
-                            <div id="bj-player-hand" class="card-slot" style="min-height: 120px; margin-bottom: 1rem;">
+                            <div id="bj-player-hand" class="card-slot" style="min-height: 160px; margin-bottom: 1.5rem;">
                             </div>
                             <p
-                                style="text-transform: uppercase; font-weight: 800; font-size: 0.9rem; color: var(--gold);">
-                                Your Score: <span id="bj-score" style="font-size: 1.5rem;">0</span></p>
+                                style="text-transform: uppercase; font-weight: 800; font-size: 0.9rem; color: var(--gold); background: rgba(0,0,0,0.3); display: inline-block; padding: 0.5rem 1.5rem; border-radius: 99px;">
+                                Your Score: <span id="bj-score" style="font-size: 1.5rem; color: white;">0</span></p>
                         </div>
                     </div>
 
                     <div class="bet-controls">
-                        <div id="bj-controls-bet" class="flex gap-4 items-center">
+                        <!-- Interface de Aposta -->
+                        <div id="bj-controls-bet" style="display: flex; gap: 1rem; align-items: center;">
                             <div class="input-group">
                                 <label>Valor da Aposta</label>
                                 <input type="number" id="bj-bet-input" value="100" min="1">
                             </div>
                             <button onclick="bj.deal()" class="btn-main">Distribuir</button>
                         </div>
-                        <div id="bj-controls-play" style="display: none;" class="flex gap-4">
-                            <button onclick="bj.hit()" class="btn-auto" style="padding: 1rem 2rem; font-size: 1rem;">HIT
-                                (Pedir)</button>
+                        <!-- Interface de Jogo (Hit/Stand) -->
+                        <div id="bj-controls-play" style="display: none; gap: 1rem;">
+                            <button onclick="bj.hit()" class="btn-auto" style="padding: 1rem 2rem; font-size: 1rem;">HIT (Pedir)</button>
                             <button onclick="bj.stand()" class="btn-main">STAND (Parar)</button>
                         </div>
                     </div>

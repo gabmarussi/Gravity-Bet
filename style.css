@@ -1,3 +1,4 @@
+/* IMPORTAÇÃO DE FONTES MODERNAS */
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap');
 
 :root {
@@ -10,6 +11,8 @@
     --glass-border: rgba(255, 255, 255, 0.1);
     --success: #00ff88;
     --danger: #ff4d4d;
+    --card-bg: #ffffff;
+    --card-text: #1a1a1a;
 }
 
 * {
@@ -24,13 +27,14 @@ body {
     font-family: 'Outfit', sans-serif;
     min-height: 100vh;
     overflow-x: hidden;
+    /* Fundo dinâmico com gradientes radiantes para profundidade visual */
     background-image:
         radial-gradient(circle at 10% 20%, rgba(212, 175, 55, 0.05) 0%, transparent 40%),
         radial-gradient(circle at 90% 80%, rgba(0, 229, 255, 0.05) 0%, transparent 40%),
         radial-gradient(circle at 50% 50%, #1a2235 0%, #0a0e1a 100%);
 }
 
-/* Header & Nav */
+/* CABEÇALHO E NAVEGAÇÃO */
 header {
     background: rgba(10, 14, 26, 0.8);
     backdrop-filter: blur(20px);
@@ -55,14 +59,9 @@ header {
     gap: 0.5rem;
 }
 
-.logo span {
-    color: white;
-}
+.logo span { color: white; }
 
-nav {
-    display: flex;
-    gap: 1.5rem;
-}
+nav { display: flex; gap: 1.5rem; }
 
 nav a {
     color: rgba(255, 255, 255, 0.6);
@@ -76,16 +75,13 @@ nav a {
     border-radius: 99px;
 }
 
-nav a:hover,
-nav a.active-nav {
+nav a:hover, nav a.active-nav {
     color: var(--gold);
     background: var(--glass);
 }
 
-.stats-bar {
-    display: flex;
-    gap: 1rem;
-}
+/* BARRA DE ESTATÍSTICAS (Pills) */
+.stats-bar { display: flex; gap: 1rem; }
 
 .stat-pill {
     background: var(--glass);
@@ -105,37 +101,39 @@ nav a.active-nav {
     background: rgba(212, 175, 55, 0.05);
 }
 
-/* Main Content */
+/* CONTEÚDO PRINCIPAL E LAYOUT */
 main {
     padding: 2rem;
     max-width: 1300px;
     margin: 0 auto;
     min-height: calc(100vh - 160px);
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
 }
 
 .game-layout {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    width: 100%;
 }
 
-/* Hero Section */
-.hero {
-    text-align: center;
-    padding: 4rem 0;
-}
+/* HERO SECTION (PÁGINA INICIAL) */
+.hero { text-align: center; padding: 4rem 0; }
 
 .hero h1 {
     font-size: 4.5rem;
     font-weight: 900;
     background: linear-gradient(135deg, white 30%, var(--gold) 100%);
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     letter-spacing: -3px;
     margin-bottom: 1rem;
 }
 
-/* Cards & Grid */
+/* GRID DE JOGOS NO HUB */
 .hub-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -167,15 +165,12 @@ main {
 .game-card .icon {
     font-size: 4rem;
     background: var(--glass);
-    width: 80px;
-    height: 80px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 80px; height: 80px;
+    display: flex; align-items: center; justify-content: center;
     border-radius: 1.5rem;
 }
 
-/* Game Table UI */
+/* ELEMENTOS DE VIDRO (GLASSMORFISMO) */
 .glass-card {
     background: rgba(255, 255, 255, 0.02);
     backdrop-filter: blur(20px);
@@ -192,7 +187,7 @@ main {
     gap: 3rem;
 }
 
-/* Controls */
+/* CONTROLES DE APOSTA */
 .bet-controls {
     background: rgba(0, 0, 0, 0.3);
     padding: 2rem;
@@ -205,11 +200,7 @@ main {
     border: 1px solid var(--glass-border);
 }
 
-.input-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
+.input-group { display: flex; flex-direction: column; gap: 0.5rem; }
 
 .input-group label {
     font-size: 0.7rem;
@@ -236,13 +227,12 @@ input[type="number"]:focus {
     box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
 }
 
-/* Buttons */
+/* BOTÕES ESTILIZADOS */
 button {
     cursor: pointer;
     font-family: 'Outfit', sans-serif;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    border: none;
-    outline: none;
+    border: none; outline: none;
 }
 
 .btn-main {
@@ -278,31 +268,23 @@ button {
     border-color: var(--success);
 }
 
-.multiplier-buttons {
-    display: flex;
-    gap: 0.5rem;
-}
+.multiplier-buttons { display: flex; gap: 0.5rem; }
 
 .btn-mult {
     background: var(--glass);
     border: 1px solid var(--glass-border);
     color: white;
-    width: 45px;
-    height: 45px;
+    width: 45px; height: 45px;
     border-radius: 0.5rem;
     font-weight: 700;
 }
 
-.btn-mult:hover {
-    background: var(--gold);
-    color: var(--navy);
-}
+.btn-mult:hover { background: var(--gold); color: var(--navy); }
 
-/* Result Popups */
+/* POPUPS DE RESULTADO (MEIO DA TELA) */
 .result-popup {
     position: fixed;
-    top: 50%;
-    left: 50%;
+    top: 50%; left: 50%;
     transform: translate(-50%, -50%) scale(0.5);
     z-index: 10000;
     pointer-events: none;
@@ -310,10 +292,7 @@ button {
     transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.result-popup.show {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 1;
-}
+.result-popup.show { transform: translate(-50%, -50%) scale(1); opacity: 1; }
 
 .result-card {
     background: var(--navy-light);
@@ -324,158 +303,283 @@ button {
     box-shadow: 0 0 100px rgba(0, 0, 0, 0.8), 0 0 50px rgba(212, 175, 55, 0.3);
 }
 
-.result-card h2 {
-    font-size: 4rem;
-    font-weight: 900;
-    margin-bottom: 0.5rem;
-}
+.result-card h2 { font-size: 4rem; font-weight: 900; margin-bottom: 0.5rem; }
+.result-win h2 { color: var(--success); }
+.result-loss h2 { color: var(--danger); }
 
-.result-win h2 {
-    color: var(--success);
-}
+/* SLOTS - ALAVANCA E MECÂNICA */
+.slots-wrapper { display: flex; gap: 3rem; align-items: center; }
 
-.result-loss h2 {
-    color: var(--danger);
-}
-
-/* Slots Specific */
-.slots-wrapper {
-    display: flex;
-    gap: 3rem;
-    align-items: center;
-}
-
-.lever-container {
-    position: relative;
-    width: 60px;
-    height: 200px;
-    cursor: pointer;
-}
+.lever-container { position: relative; width: 60px; height: 200px; cursor: pointer; }
 
 .lever-base {
-    width: 20px;
-    height: 150px;
+    width: 20px; height: 150px;
     background: #333;
-    position: absolute;
-    bottom: 0;
-    left: 20px;
+    position: absolute; bottom: 0; left: 20px;
     border-radius: 10px;
 }
 
 .lever-arm {
-    width: 20px;
-    height: 120px;
+    width: 20px; height: 120px;
     background: linear-gradient(to bottom, #666, #333);
-    position: absolute;
-    top: 30px;
-    left: 20px;
+    position: absolute; top: 30px; left: 20px;
     transform-origin: bottom center;
     transition: transform 0.2s;
     border-radius: 10px;
 }
 
 .lever-knob {
-    width: 50px;
-    height: 50px;
+    width: 50px; height: 50px;
     background: radial-gradient(circle at 30% 30%, #ff4d4d, #990000);
     border-radius: 50%;
-    position: absolute;
-    top: -25px;
-    left: -15px;
+    position: absolute; top: -25px; left: -15px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
 }
 
-.lever-container:active .lever-arm {
-    transform: rotateX(60deg);
-}
+.lever-container:active .lever-arm,
+.lever-container.pulling .lever-arm { transform: rotateX(80deg); }
 
-/* Roulette Specific */
+.lever-container.pulling .lever-knob { transform: translateY(120px) translateZ(50px); }
+
+/* ROLETA - VISUAL E MESA */
 .roulette-visual {
-    width: 350px;
-    height: 350px;
-    border: 15px solid #222;
+    width: 450px; height: 450px;
+    border: 20px solid #2c3e50;
     border-radius: 50%;
     position: relative;
-    transition: transform 4s cubic-bezier(0.1, 0, 0.1, 1);
-    background: #004d40;
-    box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.5);
+    transition: transform 5s cubic-bezier(0.15, 0, 0.15, 1);
+    background: #1e272e;
+    box-shadow: 0 0 50px rgba(0,0,0,0.8), inset 0 0 40px rgba(0,0,0,0.6);
+    display: flex; align-items: center; justify-content: center;
+}
+
+.roulette-number-label {
+    position: absolute; width: 30px; height: 225px;
+    transform-origin: bottom center;
+    bottom: 50%; left: calc(50% - 15px);
+    display: flex; flex-direction: column; align-items: center;
+    padding-top: 10px; font-size: 0.9rem; font-weight: 900; color: white;
+}
+
+.roulette-number-label.red { background: linear-gradient(to bottom, #cf4343 0%, #cf4343 45px, transparent 45px); }
+.roulette-number-label.black { background: linear-gradient(to bottom, #212121 0%, #212121 45px, transparent 45px); }
+.roulette-number-label.green { background: linear-gradient(to bottom, #27ae60 0%, #27ae60 45px, transparent 45px); }
+
+.roulette-ball {
+    position: absolute; width: 15px; height: 15px;
+    background: white; border-radius: 50%;
+    box-shadow: 0 0 10px rgba(255,255,255,0.8), inset -2px -2px 5px rgba(0,0,0,0.3);
+    z-index: 100; transition: all 5s cubic-bezier(0.15, 0, 0.15, 1);
 }
 
 .roulette-center {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 60px;
-    height: 60px;
-    background: #333;
-    border-radius: 50%;
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 150px; height: 150px;
+    background: radial-gradient(circle at 30% 30%, #444, #111);
+    border: 5px solid #222; border-radius: 50%;
     z-index: 10;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    display: flex; align-items: center; justify-content: center;
 }
 
-/* Bottom Log & Stats */
-.page-footer-container {
-    margin-top: 4rem;
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 2rem;
+.wheel-marker {
+    position: absolute; top: -20px; left: 50%; transform: translateX(-50%);
+    width: 0; height: 0;
+    border-left: 15px solid transparent; border-right: 15px solid transparent;
+    border-top: 30px solid var(--gold); z-index: 20;
 }
 
-.log-section {
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: 2rem;
-    padding: 2rem;
+#wheel-result {
+    font-size: 3rem; font-weight: 900; z-index: 15; color: white;
+    text-shadow: 0 0 20px rgba(0, 0, 0, 1);
+}
+
+/* MESA DE APOSTAS DA ROLETA */
+.rl-full-table { display: flex; flex-direction: column; gap: 1.5rem; width: 100%; max-width: 900px; }
+
+.rl-racetrack {
+    display: flex; justify-content: center; gap: 0.5rem; padding: 1rem;
+    background: rgba(0,0,0,0.3); border-radius: 3rem;
     border: 1px solid var(--glass-border);
 }
 
+.racetrack-section {
+    padding: 1rem 2rem; border-radius: 2rem;
+    background: var(--glass); cursor: pointer;
+    font-size: 0.8rem; font-weight: 800;
+    color: rgba(255,255,255,0.6); transition: all 0.3s;
+    border: 1px solid transparent;
+}
+
+.racetrack-section:hover { background: var(--gold); color: var(--navy); }
+
+.rl-main-grid {
+    display: grid;
+    grid-template-columns: 50px repeat(12, 1fr) 60px;
+    grid-template-rows: repeat(3, 1fr);
+    gap: 2px;
+    background: #111; border: 2px solid #222;
+}
+
+.grid-cell {
+    height: 50px; display: flex; align-items: center; justify-content: center;
+    font-weight: 800; cursor: pointer; transition: transform 0.1s; font-size: 0.9rem;
+}
+
+.grid-cell:hover { transform: scale(1.1); z-index: 10; font-size: 1.2rem; }
+.grid-cell.red { background: #cf4343; }
+.grid-cell.black { background: #212121; }
+.grid-cell.green { background: #27ae60; grid-row: span 3; height: 154px; }
+
+.rl-outside-bets { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1rem; margin-top: 1rem; }
+
+.outside-bet {
+    padding: 1rem; background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 1rem; text-align: center;
+    font-weight: 800; cursor: pointer;
+}
+
+.outside-bet.selected { border-color: var(--gold); background: rgba(212, 175, 55, 0.1); }
+
+/* LOG E SEÇÕES DE INFO (RODAPÉ) */
+.page-footer-container { display: flex; flex-direction: column; gap: 3rem; }
+
+.log-section {
+    background: rgba(0, 0, 0, 0.4); border-radius: 2.5rem;
+    padding: 2.5rem; border: 1px solid var(--glass-border);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
 .log-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display: flex; justify-content: space-between; align-items: center;
     margin-bottom: 1.5rem;
 }
 
 .log-window {
-    height: 200px;
-    overflow-y: auto;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.8rem;
+    height: 200px; overflow-y: auto;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;
     padding-right: 1rem;
 }
 
 .log-entry {
-    padding: 0.8rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    display: flex;
-    justify-content: space-between;
+    padding: 0.8rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex; justify-content: space-between;
 }
 
 .info-section {
-    background: var(--navy-light);
-    border-radius: 2rem;
-    padding: 2rem;
-    border: 1px solid var(--glass-border);
+    background: linear-gradient(135deg, var(--navy-light), rgba(22, 28, 45, 0.8));
+    border-radius: 2.5rem; padding: 3rem; border: 1px solid var(--glass-border);
 }
 
-/* Animations */
+/* MODAL DE FIM DE JOGO (BANKRUPTCY) */
+.modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(10, 14, 26, 0.95); backdrop-filter: blur(15px);
+    display: none; justify-content: center; align-items: center;
+    z-index: 9999; opacity: 0; transition: opacity 0.5s ease;
+}
+
+.modal-overlay.active { display: flex; opacity: 1; }
+
+.modal-content {
+    background: var(--navy-light); border: 2px solid var(--gold);
+    border-radius: 3rem; padding: 4rem; text-align: center;
+    max-width: 500px; width: 90%;
+    box-shadow: 0 0 100px rgba(212, 175, 55, 0.2);
+    transform: translateY(20px); transition: transform 0.5s ease;
+}
+
+.modal-overlay.active .modal-content { transform: translateY(0); }
+
+/* ESTILO DAS CARTAS DO BLACKJACK */
+.card-slot { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; perspective: 1000px; }
+
+.card {
+    width: 100px; height: 140px;
+    background: var(--card-bg); border-radius: 0.8rem;
+    color: var(--card-text); display: flex; flex-direction: column;
+    justify-content: space-between; padding: 0.8rem;
+    font-weight: 800; font-size: 1.4rem;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    position: relative; transform-style: preserve-3d;
+    animation: dealCard 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.card.red { color: #e74c3c; }
+
+.card::after {
+    content: attr(data-suit);
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    font-size: 2.5rem; opacity: 0.15;
+}
+
+.card.hidden-card {
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-bright) 100%);
+    color: transparent;
+}
+
+.card.hidden-card::before {
+    content: 'A'; position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%); color: white;
+    font-size: 3rem; opacity: 0.5;
+}
+
+/* SLOTS - ANIMAÇÃO DE BOBINAS */
+.reel-window {
+    width: 120px; height: 160px;
+    background: var(--navy); border: 3px solid var(--glass-border);
+    border-radius: 1.5rem; position: relative; overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.reel-window.win {
+    border-color: var(--gold);
+    animation: pulse 0.5s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); box-shadow: 0 0 0 rgba(212, 175, 55, 0); }
+    50% { transform: scale(1.02); box-shadow: 0 0 20px rgba(212, 175, 55, 0.4); }
+    100% { transform: scale(1); box-shadow: 0 0 0 rgba(212, 175, 55, 0); }
+}
+
+.reel-strip {
+    display: flex; flex-direction: column; align-items: center;
+    position: absolute; top: 0; left: 0; width: 100%;
+}
+
+.reel-symbol {
+    height: 160px; width: 100%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 4rem; flex-shrink: 0;
+}
+
+@keyframes blurSpin {
+    0% { filter: blur(0px); }
+    10% { filter: blur(4px); }
+    90% { filter: blur(4px); }
+    100% { filter: blur(0px); }
+}
+
+.spinning .reel-strip { animation: blurSpin 2s ease-in-out; }
+
+/* ANIMAÇÕES GERAIS */
+@keyframes dealCard {
+    from { transform: translateY(-100px) rotateY(-180deg); opacity: 0; }
+    to { transform: translateY(0) rotateY(0); opacity: 1; }
+}
+
 @keyframes spinWheel {
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(3600deg);
-    }
+    from { transform: rotate(0deg); }
+    to { transform: rotate(3600deg); }
 }
 
-/* Mobile */
+/* RESPONSIVIDADE MOBILE */
 @media (max-width: 900px) {
-    .page-footer-container {
-        grid-template-columns: 1fr;
-    }
-
-    .hero h1 {
-        font-size: 3rem;
-    }
+    .page-footer-container { flex-direction: column; }
+    .hero h1 { font-size: 3rem; }
+    .roulette-visual { width: 320px; height: 320px; }
+    .roulette-center { width: 100px; height: 100px; }
+    .rl-main-grid { transform: scale(0.8); transform-origin: top center; }
 }

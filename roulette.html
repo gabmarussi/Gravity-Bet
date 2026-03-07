@@ -6,80 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Roulette | Alpha Bet</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        .roulette-container {
-            display: flex;
-            gap: 4rem;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-        }
-
-        .betting-table {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-            width: 400px;
-        }
-
-        .bet-cell {
-            padding: 1.5rem;
-            border-radius: 1.5rem;
-            border: 1px solid var(--glass-border);
-            text-align: center;
-            font-weight: 800;
-            cursor: pointer;
-            transition: all 0.3s;
-            position: relative;
-        }
-
-        .bet-cell:hover {
-            transform: scale(1.05);
-            border-color: white;
-        }
-
-        .bet-cell.selected {
-            border: 3px solid var(--gold);
-            background: rgba(212, 175, 55, 0.2);
-        }
-
-        .red-cell {
-            background: #d32f2f;
-        }
-
-        .black-cell {
-            background: #212121;
-        }
-
-        .neutral-cell {
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .wheel-marker {
-            position: absolute;
-            top: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 0;
-            border-left: 15px solid transparent;
-            border-right: 15px solid transparent;
-            border-top: 30px solid var(--gold);
-            z-index: 20;
-        }
-
-        #wheel-result {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 3rem;
-            font-weight: 900;
-            z-index: 15;
-            color: white;
-            text-shadow: 0 0 20px rgba(0, 0, 0, 1);
-        }
-    </style>
+    <!-- Estilos de mesa e roleta foram movidos para o CSS global -->
 </head>
 
 <body>
@@ -105,46 +32,59 @@
     </header>
 
     <main>
-        <div class="game-layout">
             <div class="glass-card">
-                <div class="game-container">
-                    <div class="roulette-container">
-                        <!-- Visual Wheel -->
+                <div class="game-container" style="flex-direction: column; width: 100%;">
+                    <div class="roulette-container" style="flex-direction: column; gap: 3rem;">
+                        <!-- Visual Wheel Section -->
                         <div style="position: relative;">
                             <div class="wheel-marker"></div>
                             <div id="roulette-wheel" class="roulette-visual">
-                                <!-- Inner numbers visualization -->
-                                <div class="roulette-center"></div>
-                                <div id="wheel-result">?</div>
+                                <!-- Ball element -->
+                                <div id="roulette-ball" class="roulette-ball"></div>
+                                <!-- Inner numbers visualization created via JS -->
+                                <div class="roulette-center">
+                                    <div id="wheel-result" style="font-size: 3rem; font-weight: 900; color: white; text-shadow: 0 0 20px rgba(0,0,0,1);">?</div>
+                                </div>
                             </div>
                         </div>
 
-                        <!-- Betting Table -->
-                        <div class="betting-table">
-                            <div onclick="roulette.selectBet('RED')" id="bet-RED" class="bet-cell red-cell">RED (2x)
-                            </div>
-                            <div onclick="roulette.selectBet('BLACK')" id="bet-BLACK" class="bet-cell black-cell">BLACK
-                                (2x)</div>
-                            <div onclick="roulette.selectBet('EVEN')" id="bet-EVEN" class="bet-cell neutral-cell">EVEN
-                                (2x)</div>
-                            <div onclick="roulette.selectBet('ODD')" id="bet-ODD" class="bet-cell neutral-cell">ODD (2x)
+                        <!-- Full Betting Table -->
+                        <div class="rl-full-table">
+                            <!-- Racetrack -->
+                            <div class="rl-racetrack">
+                                <div class="racetrack-section" onclick="roulette.selectBet('VIZINHOS')">VIZINHOS</div>
+                                <div class="racetrack-section" onclick="roulette.selectBet('ORFAOS')">ÓRFÃOS</div>
+                                <div class="racetrack-section" onclick="roulette.selectBet('TERCEIROS')">TERCEIROS</div>
                             </div>
 
-                            <div
-                                style="grid-column: span 2; padding: 1rem; background: rgba(0,0,0,0.3); border-radius: 1.5rem;">
-                                <div style="display: flex; gap: 1rem; align-items: center;">
-                                    <div class="input-group" style="flex: 1;">
-                                        <label>Número Específico (0-36)</label>
-                                        <input type="number" id="rl-num-input" placeholder="0-36" style="width: 100%;">
-                                    </div>
-                                    <button onclick="roulette.selectBet('NUMBER')" id="bet-NUMBER" class="btn-auto"
-                                        style="height: 55px; margin-top: 15px;">FIXAR NÚMERO</button>
+                            <!-- Main Grid -->
+                            <div style="display: flex; justify-content: center; width: 100%;">
+                                <div class="rl-main-grid" id="rl-main-grid">
+                                    <div class="grid-cell green" onclick="roulette.selectBet('0')">0</div>
+                                    <!-- Dynamic Numbers -->
                                 </div>
+                            </div>
+
+                            <!-- Outside Bets -->
+                            <div class="rl-outside-bets">
+                                <div class="outside-bet" onclick="roulette.selectBet('LOW')">1-18</div>
+                                <div class="outside-bet" onclick="roulette.selectBet('EVEN')">PAR</div>
+                                <div class="outside-bet" style="background: #cf4343;" onclick="roulette.selectBet('RED')">RED</div>
+                                <div class="outside-bet" style="background: #212121;" onclick="roulette.selectBet('BLACK')">BLACK</div>
+                                <div class="outside-bet" onclick="roulette.selectBet('ODD')">ÍMPAR</div>
+                                <div class="outside-bet" onclick="roulette.selectBet('HIGH')">19-36</div>
+                            </div>
+                            
+                            <div class="rl-outside-bets" style="grid-template-columns: repeat(3, 1fr); margin-top: 0.5rem;">
+                                <div class="outside-bet" onclick="roulette.selectBet('1ST12')">1ª 12</div>
+                                <div class="outside-bet" onclick="roulette.selectBet('2ND12')">2ª 12</div>
+                                <div class="outside-bet" onclick="roulette.selectBet('3ND12')">3ª 12</div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="bet-controls">
+                    <div class="bet-controls" style="margin-top: 2rem;">
+                        <p id="current-bet-display" style="width: 100%; text-align: center; font-size: 0.8rem; color: var(--gold); margin-bottom: 1rem; font-weight: 800;">SELECT YOUR BET ON THE TABLE</p>
                         <div class="input-group">
                             <label>Valor da Aposta</label>
                             <input type="number" id="rl-bet-input" value="100" min="1">
@@ -153,6 +93,7 @@
                             style="padding: 1.2rem 5rem;">GIRAR ROLETA</button>
                     </div>
                 </div>
+  </div>
             </div>
 
             <div class="page-footer-container">
@@ -167,17 +108,36 @@
                 </div>
 
                 <div class="info-section">
-                    <h3 style="color: var(--gold); margin-bottom: 1rem;">ESTATÍSTICAS & REGRAS</h3>
-                    <p style="color: rgba(255,255,255,0.6); font-size: 0.85rem; line-height: 1.6; margin-bottom: 1rem;">
-                        Escolha um campo ou número e gire. Vitórias em cores ou paridade pagam 2x. Números exatos pagam
-                        <b>35x</b>.
-                    </p>
-                    <div
-                        style="background: var(--glass); padding: 1rem; border-radius: 1rem; border: 1px solid var(--glass-border);">
-                        <p style="font-size: 0.7rem; color: rgba(255,255,255,0.4);">DADOS DA SESSÃO</p>
-                        <p style="font-size: 0.9rem;">Saldo de Tempo: <span id="survival-timer-stats">00:00</span></p>
-                        <p style="font-size: 0.9rem;">Risco Alpha: <span style="color: var(--success);">ESTÁVEL</span>
-                        </p>
+                    <h3 style="color: var(--gold); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <span>📜</span> REGRAS & ESTATÍSTICAS
+                    </h3>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+                        <div style="background: rgba(255,255,255,0.03); padding: 1.2rem; border-radius: 1.5rem; border: 1px solid var(--glass-border);">
+                            <h4 style="color: var(--gold); font-size: 0.8rem; margin-bottom: 0.5rem;">TABELA DE ODDS</h4>
+                            <ul style="list-style: none; font-size: 0.75rem; color: rgba(255,255,255,0.6); line-height: 1.8;">
+                                <li>• Números: <b>35x</b></li>
+                                <li>• Colunas (2:1): <b>3x</b></li>
+                                <li>• Dúzias (12): <b>3x</b></li>
+                                <li>• Red/Black: <b>2x</b></li>
+                                <li>• Par/Ímpar: <b>2x</b></li>
+                            </ul>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.03); padding: 1.2rem; border-radius: 1.5rem; border: 1px solid var(--glass-border);">
+                            <h4 style="color: var(--gold); font-size: 0.8rem; margin-bottom: 0.5rem;">RACETRACK</h4>
+                            <ul style="list-style: none; font-size: 0.75rem; color: rgba(255,255,255,0.6); line-height: 1.8;">
+                                <li>• Vizinhos: <b>5x</b></li>
+                                <li>• Órfãos: <b>5x</b></li>
+                                <li>• Terceiros: <b>5x</b></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div style="background: var(--gold); color: var(--navy); padding: 1.5rem; border-radius: 1.5rem; position: relative; overflow: hidden;">
+                        <div style="position: absolute; right: -10px; bottom: -10px; font-size: 4rem; opacity: 0.1;">🕒</div>
+                        <p style="font-size: 0.7rem; font-weight: 800; text-transform: uppercase; margin-bottom: 0.3rem;">Multiplicador de Sobrevivência</p>
+                        <p style="font-size: 1.5rem; font-weight: 900;" id="survival-mult">1.00x</p>
+                        <p style="font-size: 0.75rem; opacity: 0.8; margin-top: 0.5rem;">Seus ganhos aumentam conforme você sobrevive no cassino!</p>
                     </div>
                 </div>
             </div>
