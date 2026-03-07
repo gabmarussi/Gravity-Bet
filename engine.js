@@ -43,14 +43,21 @@ const AlphaEngine = {
             multDisplay.textContent = mult.toFixed(2) + 'x';
         }
 
+        // O salvamento no LocalStorage continua aqui
         localStorage.setItem('alpha_balance', this.balance);
         localStorage.setItem('alpha_survival_time', this.survivalTime);
+    },
 
-        // Verifica estado de falência
+    /**
+     * Verifica estado de falência (saldo <= 0)
+     * Deve ser chamado ao final de cada rodada
+     */
+    checkBankruptcy() {
         if (this.balance <= 0) {
             const modal = document.getElementById('game-over-modal');
             if (modal && !modal.classList.contains('active')) {
-                this.gameOver();
+                // Pequeno delay para permitir que o usuário veja o resultado final
+                setTimeout(() => this.gameOver(), 1500);
             }
         }
     },

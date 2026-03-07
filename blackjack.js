@@ -173,6 +173,7 @@ const bj = {
             document.getElementById('bj-controls-bet').style.display = 'flex';
             document.getElementById('bj-controls-play').style.display = 'none';
             AlphaEngine.updateUI();
+            AlphaEngine.checkBankruptcy();
         }, 1500);
     }
 };

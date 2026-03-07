@@ -184,7 +184,19 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 3rem;
+    gap: 2rem;
+}
+
+.reel-area {
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+    padding: 1rem;
+}
+
+.reel-container {
+    display: flex;
+    gap: 1.5rem;
 }
 
 /* CONTROLES DE APOSTA */
@@ -307,86 +319,107 @@ button {
 .result-win h2 { color: var(--success); }
 .result-loss h2 { color: var(--danger); }
 
-/* SLOTS - ALAVANCA E MECÂNICA */
-.slots-wrapper { display: flex; gap: 3rem; align-items: center; }
-
-.lever-container { position: relative; width: 60px; height: 200px; cursor: pointer; }
+/* SLOTS - ALAVANCA PREMIUM (ESTILO CASSINO REAL) */
+.lever-container { 
+    position: relative; 
+    width: 100px; height: 260px; 
+    cursor: pointer;
+    perspective: 1000px;
+    margin-left: 20px;
+}
 
 .lever-base {
-    width: 20px; height: 150px;
-    background: #333;
+    width: 60px; height: 80px;
+    background: linear-gradient(135deg, #1e252b 0%, #4b5563 50%, #1e252b 100%);
     position: absolute; bottom: 0; left: 20px;
-    border-radius: 10px;
+    border-radius: 12px 12px 5px 5px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.8), inset 0 2px 2px rgba(255,255,255,0.1);
+    border: 2px solid #2d3436;
 }
 
 .lever-arm {
-    width: 20px; height: 120px;
-    background: linear-gradient(to bottom, #666, #333);
-    position: absolute; top: 30px; left: 20px;
+    width: 20px; height: 160px;
+    background: linear-gradient(to right, #95a5a6, #ffffff, #7f8c8d);
+    position: absolute; top: 30px; left: 40px;
     transform-origin: bottom center;
-    transition: transform 0.2s;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.4);
 }
 
 .lever-knob {
-    width: 50px; height: 50px;
-    background: radial-gradient(circle at 30% 30%, #ff4d4d, #990000);
+    width: 70px; height: 70px;
+    background: radial-gradient(circle at 35% 35%, #ff4757, #ff6b81, #ae1438);
     border-radius: 50%;
-    position: absolute; top: -25px; left: -15px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    position: absolute; top: -35px; left: -25px;
+    box-shadow: 
+        0 10px 25px rgba(0, 0, 0, 0.7), 
+        inset -5px -5px 15px rgba(0,0,0,0.6),
+        inset 5px 5px 15px rgba(255,255,255,0.4);
+    border: 4px solid rgba(255,255,255,0.1);
 }
 
 .lever-container:active .lever-arm,
-.lever-container.pulling .lever-arm { transform: rotateX(80deg); }
+.lever-container.pulling .lever-arm { transform: rotateX(60deg) translateY(30px); }
 
-.lever-container.pulling .lever-knob { transform: translateY(120px) translateZ(50px); }
 
 /* ROLETA - VISUAL E MESA */
+/* ROLETA - VISUAL E MESA */
+.roulette-container-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 5rem;
+    width: 100%;
+}
+
 .roulette-visual {
-    width: 450px; height: 450px;
-    border: 20px solid #2c3e50;
+    width: 520px; height: 520px;
+    border: 30px solid #2d3436;
     border-radius: 50%;
     position: relative;
     transition: transform 5s cubic-bezier(0.15, 0, 0.15, 1);
     background: #1e272e;
-    box-shadow: 0 0 50px rgba(0,0,0,0.8), inset 0 0 40px rgba(0,0,0,0.6);
+    box-shadow: 
+        0 40px 80px rgba(0,0,0,0.9), 
+        inset 0 0 80px rgba(0,0,0,0.7),
+        0 0 120px rgba(212, 175, 55, 0.1);
     display: flex; align-items: center; justify-content: center;
 }
 
 .roulette-number-label {
-    position: absolute; width: 30px; height: 225px;
+    position: absolute; width: 35px; height: 260px;
     transform-origin: bottom center;
-    bottom: 50%; left: calc(50% - 15px);
+    bottom: 50%; left: calc(50% - 17.5px);
     display: flex; flex-direction: column; align-items: center;
-    padding-top: 10px; font-size: 0.9rem; font-weight: 900; color: white;
+    padding-top: 12px; font-size: 1rem; font-weight: 900; color: white;
 }
 
-.roulette-number-label.red { background: linear-gradient(to bottom, #cf4343 0%, #cf4343 45px, transparent 45px); }
-.roulette-number-label.black { background: linear-gradient(to bottom, #212121 0%, #212121 45px, transparent 45px); }
-.roulette-number-label.green { background: linear-gradient(to bottom, #27ae60 0%, #27ae60 45px, transparent 45px); }
+.roulette-number-label.red { background: linear-gradient(to bottom, #cf4343 0%, #cf4343 55px, transparent 55px); }
+.roulette-number-label.black { background: linear-gradient(to bottom, #212121 0%, #212121 55px, transparent 55px); }
+.roulette-number-label.green { background: linear-gradient(to bottom, #27ae60 0%, #27ae60 55px, transparent 55px); }
 
 .roulette-ball {
-    position: absolute; width: 15px; height: 15px;
+    position: absolute; width: 14px; height: 14px;
     background: white; border-radius: 50%;
-    box-shadow: 0 0 10px rgba(255,255,255,0.8), inset -2px -2px 5px rgba(0,0,0,0.3);
+    box-shadow: 0 0 15px rgba(255,255,255,0.9), inset -2px -2px 5px rgba(0,0,0,0.3);
     z-index: 100; transition: all 5s cubic-bezier(0.15, 0, 0.15, 1);
 }
 
 .roulette-center {
     position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-    width: 150px; height: 150px;
-    background: radial-gradient(circle at 30% 30%, #444, #111);
-    border: 5px solid #222; border-radius: 50%;
+    width: 140px; height: 140px;
+    background: radial-gradient(circle at 35% 35%, #444, #111);
+    border: 6px solid #222; border-radius: 50%;
     z-index: 10;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
     display: flex; align-items: center; justify-content: center;
 }
 
+
 .wheel-marker {
-    position: absolute; top: -20px; left: 50%; transform: translateX(-50%);
-    width: 0; height: 0;
-    border-left: 15px solid transparent; border-right: 15px solid transparent;
-    border-top: 30px solid var(--gold); z-index: 20;
+    display: none; /* Removido conforme solicitação */
 }
 
 #wheel-result {
@@ -422,14 +455,14 @@ button {
 }
 
 .grid-cell {
-    height: 50px; display: flex; align-items: center; justify-content: center;
-    font-weight: 800; cursor: pointer; transition: transform 0.1s; font-size: 0.9rem;
+    height: 35px; display: flex; align-items: center; justify-content: center;
+    font-weight: 800; cursor: pointer; transition: transform 0.1s; font-size: 0.8rem;
 }
 
-.grid-cell:hover { transform: scale(1.1); z-index: 10; font-size: 1.2rem; }
+.grid-cell:hover { transform: scale(1.1); z-index: 10; font-size: 1rem; }
 .grid-cell.red { background: #cf4343; }
 .grid-cell.black { background: #212121; }
-.grid-cell.green { background: #27ae60; grid-row: span 3; height: 154px; }
+.grid-cell.green { background: #27ae60; grid-row: span 3; height: 109px; }
 
 .rl-outside-bets { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1rem; margin-top: 1rem; }
 

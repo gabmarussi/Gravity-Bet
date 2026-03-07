@@ -141,6 +141,7 @@ const slots = {
             AlphaEngine.addLog(`Slot Spin: Perdeu R$ ${bet.toFixed(2)}`, "loss");
         }
         AlphaEngine.updateUI();
+        AlphaEngine.checkBankruptcy();
     }
 };
 

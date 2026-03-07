@@ -119,20 +119,24 @@ const roulette = {
         const resultIndex = this.wheelNumbers.indexOf(resultNum);
         
         // Define as rotações para criar uma animação fluida (múltiplas voltas completas)
-        const wheelFullSpins = 5;
-        const ballFullSpins = 8;
+        const wheelFullSpins = 6;
+        const ballFullSpins = 10;
+        const numArc = 360 / 37;
+
+        // Cálculo para sincronia (RODA PARA ESQUERDA): 
+        // Para o número parar no topo (0 graus) girando para a esquerda, 
+        // a rotação final deve ser de -(resultIndex * numArc)
+        this.rotation -= (360 * wheelFullSpins) + (this.rotation % 360) + (resultIndex * numArc);
         
-        // A roleta e a bola giram em sincronia calculada
-        const wheelTargetRotation = this.rotation + (360 * wheelFullSpins);
-        this.rotation = wheelTargetRotation;
         wheel.style.transition = 'transform 5s cubic-bezier(0.15, 0, 0.15, 1)';
         wheel.style.transform = `rotate(${this.rotation}deg)`;
 
-        const numArc = 360 / 37;
-        const ballTargetRotation = -(360 * ballFullSpins) - (resultIndex * numArc);
+        // A bola gira para a DIREITA (Sentido horário) relativa à roda
+        // Para parar no topo (0 absoluto), a rotação relativa deve ser o inverso da rotação da roda
+        const ballTargetRotation = (360 * ballFullSpins) + (resultIndex * numArc);
         
         ball.style.transition = 'none';
-        ball.style.transform = 'rotate(0deg) translateY(-200px)';
+        ball.style.transform = `rotate(0deg) translateY(-200px)`;
         ball.offsetHeight; // Forçar o reflow do elemento no navegador
         
         ball.style.transition = 'transform 5s cubic-bezier(0.1, 0, 0.2, 1)';
@@ -198,6 +202,7 @@ const roulette = {
         }
 
         AlphaEngine.updateUI();
+        AlphaEngine.checkBankruptcy();
     }
 };
 
