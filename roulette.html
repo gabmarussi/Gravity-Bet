@@ -12,23 +12,29 @@
 <body>
 
     <header>
+        <div class="menu-toggle" onclick="AlphaEngine.toggleMenu()">☰</div>
         <a href="index.html" class="logo">ALPHA <span>BET</span></a>
+        
+        <div class="header-hud">
+            <div class="survival-timer-container">
+                <div class="survival-timer-label">Survivor Time</div>
+                <div id="survival-timer">00:00:00</div>
+            </div>
+
+            <div class="stats-bar">
+                <div class="stat-pill balance">
+                    <span>💎</span>
+                    <span id="balance-display">0.00</span>
+                </div>
+            </div>
+        </div>
+
         <nav>
             <a href="index.html">Home</a>
             <a href="blackjack.html">Blackjack</a>
             <a href="slots.html">Slots</a>
-            <a href="roulette.html" class="active-nav">Roulette</a>
+            <a href="roulette.html">Roulette</a>
         </nav>
-        <div class="stats-bar">
-            <div class="stat-pill">
-                <span>🕒</span>
-                <span id="survival-timer">00:00:00</span>
-            </div>
-            <div class="stat-pill balance">
-                <span>💎</span>
-                <span id="balance-display">0.00</span>
-            </div>
-        </div>
     </header>
 
     <main>
@@ -49,7 +55,7 @@
                     </div>
 
                     <!-- Lado Direito: Apostas e Controles -->
-                    <div class="betting-side" style="flex: 1; display: flex; flex-direction: column; gap: 1.5rem;">
+                    <div class="betting-side">
                         <div class="rl-full-table">
                             <!-- Racetrack -->
                             <div class="rl-racetrack" style="padding: 0.8rem; margin-bottom: 1rem;">
@@ -60,7 +66,7 @@
 
                             <!-- Main Grid -->
                             <div style="display: flex; justify-content: center; width: 100%;">
-                                <div class="rl-main-grid" id="rl-main-grid" style="transform: scale(1);">
+                                <div class="rl-main-grid" id="rl-main-grid">
                                     <div class="grid-cell green" onclick="roulette.selectBet('0')">0</div>
                                     <!-- Dynamic Numbers -->
                                 </div>
@@ -84,7 +90,7 @@
                         </div>
 
                         <!-- Controles Unificados -->
-                        <div class="bet-controls" style="width: 100%; padding: 2rem; background: rgba(0,0,0,0.5); border-radius: 2rem; border: 1px solid var(--glass-border);">
+                        <div class="bet-controls">
                             <p id="current-bet-display" style="width: 100%; text-align: center; font-size: 0.9rem; color: var(--gold); margin-bottom: 1.5rem; font-weight: 800;">SELECIONE SUA APOSTA NA MESA</p>
                             <div style="display: flex; gap: 1.5rem; align-items: flex-end;">
                                 <div class="input-group" style="flex: 1;">
@@ -171,6 +177,16 @@
                 </div>
             </div>
         </div>
+        <section class="global-progress-footer">
+            <div class="progress-box">
+                <p class="progress-label">Seu Progresso de Sobrevivência</p>
+                <div class="progress-timer" id="survival-timer-hero">00:00:00</div>
+                <p class="progress-mult">Multiplicador Global: <span id="survival-mult">1.00x</span></p>
+                <p style="margin-top: 1.5rem; opacity: 1;">
+                    <span class="reset-link-text" onclick="AlphaEngine.showConfirmModal('Reiniciar Jogo/Tempo', 'Tem certeza que deseja zerar todo o seu progresso de sobrevivência e saldo?', () => AlphaEngine.resetGame())">Reiniciar o Jogo/Tempo</span>
+                </p>
+            </div>
+        </section>
     </main>
 
     <!-- Game Over Modal -->
@@ -182,6 +198,18 @@
                 style="font-family: 'JetBrains Mono', monospace; font-size: 3rem; color: white; margin-bottom: 2rem;">
                 00:00:00</div>
             <button onclick="AlphaEngine.resetGame()" class="btn-main">Tentar Novamente</button>
+        </div>
+    </div>
+
+    <!-- Custom Confirm Modal -->
+    <div id="custom-confirm-modal" class="confirm-modal-overlay">
+        <div class="confirm-modal-content">
+            <h3 class="confirm-modal-title">Reiniciar Jogo?</h3>
+            <p class="confirm-modal-text">Seu progresso será perdido para sempre.</p>
+            <div class="confirm-btn-group">
+                <button class="btn-cancel">Cancelar</button>
+                <button class="btn-confirm">Reiniciar</button>
+            </div>
         </div>
     </div>
 

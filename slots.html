@@ -12,23 +12,29 @@
 <body>
 
     <header>
+        <div class="menu-toggle" onclick="AlphaEngine.toggleMenu()">☰</div>
         <a href="index.html" class="logo">ALPHA <span>BET</span></a>
+        
+        <div class="header-hud">
+            <div class="survival-timer-container">
+                <div class="survival-timer-label">Survivor Time</div>
+                <div id="survival-timer">00:00:00</div>
+            </div>
+
+            <div class="stats-bar">
+                <div class="stat-pill balance">
+                    <span>💎</span>
+                    <span id="balance-display">0.00</span>
+                </div>
+            </div>
+        </div>
+
         <nav>
             <a href="index.html">Home</a>
             <a href="blackjack.html">Blackjack</a>
-            <a href="slots.html" class="active-nav">Slots</a>
+            <a href="slots.html">Slots</a>
             <a href="roulette.html">Roulette</a>
         </nav>
-        <div class="stats-bar">
-            <div class="stat-pill">
-                <span>🕒</span>
-                <span id="survival-timer">00:00:00</span>
-            </div>
-            <div class="stat-pill balance">
-                <span>💎</span>
-                <span id="balance-display">0.00</span>
-            </div>
-        </div>
     </header>
 
     <main>
@@ -79,7 +85,7 @@
                         </div>
 
                         <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-                            <button id="spin-btn" onclick="slots.spin()" class="btn-main" style="padding: 1.5rem 4rem;">SPIN</button>
+                            <button id="spin-btn" onclick="slots.spin()" class="btn-main">SPIN</button>
                             <button id="auto-btn" onclick="slots.toggleAuto()" class="btn-auto">AUTO BET: OFF</button>
                         </div>
                     </div>
@@ -101,7 +107,7 @@
                         <span>🎰</span> TABELA DE PAGAMENTOS
                     </h3>
 
-                    <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 1rem; color: rgba(255,255,255,0.7); font-size: 0.7rem; margin-bottom: 2rem;">
+                    <div class="payout-grid">
                         <div style="background: var(--glass); padding: 0.8rem; border-radius: 1rem; border: 1px solid var(--glass-border); text-align: center;">
                             <span style="font-size: 1.2rem;">💎 💎 💎</span><br><b style="color: var(--gold); font-size: 1rem;">100x</b>
                         </div>
@@ -131,6 +137,16 @@
                 </div>
             </div>
         </div>
+        <section class="global-progress-footer">
+            <div class="progress-box">
+                <p class="progress-label">Seu Progresso de Sobrevivência</p>
+                <div class="progress-timer" id="survival-timer-hero">00:00:00</div>
+                <p class="progress-mult">Multiplicador Global: <span id="survival-mult">1.00x</span></p>
+                <p style="margin-top: 1.5rem; opacity: 1;">
+                    <span class="reset-link-text" onclick="AlphaEngine.showConfirmModal('Reiniciar Jogo/Tempo', 'Tem certeza que deseja zerar todo o seu progresso de sobrevivência e saldo?', () => AlphaEngine.resetGame())">Reiniciar o Jogo/Tempo</span>
+                </p>
+            </div>
+        </section>
     </main>
 
     <!-- Game Over Modal -->
@@ -143,6 +159,18 @@
                 style="font-family: 'JetBrains Mono', monospace; font-size: 3rem; color: white; margin-bottom: 2rem;">
                 00:00:00</div>
             <button onclick="AlphaEngine.resetGame()" class="btn-main">Reiniciar</button>
+        </div>
+    </div>
+
+    <!-- Custom Confirm Modal -->
+    <div id="custom-confirm-modal" class="confirm-modal-overlay">
+        <div class="confirm-modal-content">
+            <h3 class="confirm-modal-title">Reiniciar Jogo?</h3>
+            <p class="confirm-modal-text">Seu progresso será perdido para sempre.</p>
+            <div class="confirm-btn-group">
+                <button class="btn-cancel">Cancelar</button>
+                <button class="btn-confirm">Reiniciar</button>
+            </div>
         </div>
     </div>
 

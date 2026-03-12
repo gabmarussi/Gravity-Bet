@@ -2,18 +2,27 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap');
 
 :root {
-    --gold: #D4AF37;
-    --gold-bright: #FFD700;
     --navy: #0A0E1A;
     --navy-light: #161C2D;
-    --accent: #00e5ff;
+    --gold: #D4AF37;
+    --gold-bright: #F1D279;
     --glass: rgba(255, 255, 255, 0.03);
-    --glass-border: rgba(255, 255, 255, 0.1);
-    --success: #00ff88;
-    --danger: #ff4d4d;
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --success: #27ae60;
+    --danger: #cf4343;
     --card-bg: #ffffff;
     --card-text: #1a1a1a;
 }
+
+/* SCROLLBAR PREMIUM */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--navy); }
+::-webkit-scrollbar-thumb { 
+    background: var(--glass-border); 
+    border-radius: 10px; 
+    border: 2px solid var(--navy);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--gold); opacity: 0.5; }
 
 * {
     margin: 0;
@@ -36,16 +45,17 @@ body {
 
 /* CABEÇALHO E NAVEGAÇÃO */
 header {
-    background: rgba(10, 14, 26, 0.8);
+    background: rgba(10, 14, 26, 0.95);
     backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--glass-border);
-    padding: 1rem 2rem;
+    padding: 0.75rem 2rem;
     position: sticky;
     top: 0;
     z-index: 1000;
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
+    min-height: 80px;
 }
 
 .logo {
@@ -57,21 +67,32 @@ header {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    justify-self: start;
 }
 
 .logo span { color: white; }
 
-nav { display: flex; gap: 1.5rem; }
+nav { 
+    display: flex; 
+    gap: 0.5rem; 
+}
+
+@media (min-width: 1000px) {
+    nav { 
+        order: 3;
+        justify-self: end;
+    }
+}
 
 nav a {
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.4);
     text-decoration: none;
-    font-weight: 600;
-    font-size: 0.85rem;
+    font-weight: 700;
+    font-size: 0.8rem;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
+    letter-spacing: 1px;
     transition: all 0.3s ease;
-    padding: 0.5rem 1rem;
+    padding: 0.4rem 0.8rem;
     border-radius: 99px;
 }
 
@@ -80,28 +101,217 @@ nav a:hover, nav a.active-nav {
     background: var(--glass);
 }
 
-/* BARRA DE ESTATÍSTICAS (Pills) */
-.stats-bar { display: flex; gap: 1rem; }
+.menu-toggle {
+    display: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: white;
+    justify-self: end;
+}
 
-.stat-pill {
-    background: var(--glass);
-    border: 1px solid var(--glass-border);
-    padding: 0.5rem 1rem;
+/* HUD CENTRALIZADO (Tempo e Dinheiro) */
+.header-hud {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    grid-column: 2;
+}
+
+.survival-timer-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.survival-timer-label {
+    font-size: 0.55rem;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+#survival-timer {
+    font-size: 1.1rem;
+    font-weight: 800;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.btn-reset {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.1);
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-top: 2px;
+}
+
+.btn-reset:hover {
+    color: var(--danger);
+    background: rgba(255, 77, 77, 0.05);
+    text-shadow: 0 0 10px rgba(255, 77, 77, 0.3);
+}
+
+.stats-bar { 
+    display: flex; 
+    align-items: center;
+}
+
+.stat-pill.balance {
+    background: rgba(212, 175, 55, 0.1);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    padding: 0.4rem 0.8rem;
     border-radius: 99px;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
+    color: var(--gold);
+    font-weight: 700;
     display: flex;
     align-items: center;
     gap: 0.5rem;
 }
 
-.stat-pill.balance {
-    border-color: rgba(212, 175, 55, 0.3);
-    color: var(--gold);
-    background: rgba(212, 175, 55, 0.05);
+@media (max-width: 1000px) {
+    header {
+        position: relative;
+        justify-content: space-between;
+        padding: 0.6rem 1rem;
+    }
+
+    .header-hud {
+        position: static;
+        transform: none;
+        gap: 1rem;
+        order: 2;
+    }
+    
+    .logo { order: 1; }
+    .menu-toggle { order: 3; margin-left: auto; display: block; }
 }
 
-/* CONTEÚDO PRINCIPAL E LAYOUT */
+.reset-link-text {
+    color: rgba(255, 255, 255, 0.4);
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 0.75rem;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.reset-link-text:hover {
+    color: #ff4d4d;
+    text-shadow: 0 0 10px rgba(255, 77, 77, 0.3);
+}
+
+/* MODAL DE CONFIRMAÇÃO CUSTOMIZADO */
+.confirm-modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(10, 14, 26, 0.98); backdrop-filter: blur(20px);
+    display: none; justify-content: center; align-items: center;
+    z-index: 10001; opacity: 0; transition: opacity 0.4s ease;
+}
+
+.confirm-modal-overlay.active { display: flex; opacity: 1; }
+
+.confirm-modal-content {
+    background: var(--navy-light); border: 2px solid rgba(255, 77, 77, 0.5);
+    border-radius: 2rem; padding: 3rem; text-align: center;
+    max-width: 400px; width: 90%;
+    box-shadow: 0 0 60px rgba(255, 77, 77, 0.1);
+    transform: scale(0.9); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.confirm-modal-overlay.active .confirm-modal-content { transform: scale(1); }
+
+.confirm-modal-title { font-size: 1.5rem; font-weight: 800; color: white; margin-bottom: 1rem; }
+.confirm-modal-text { font-size: 0.9rem; color: rgba(255,255,255,0.6); margin-bottom: 2rem; }
+
+.confirm-btn-group { display: flex; gap: 1rem; justify-content: center; }
+
+.btn-confirm {
+    background: #ff4d4d; color: white;
+    padding: 0.8rem 2rem; border-radius: 0.8rem;
+    font-weight: 800; font-size: 0.9rem; text-transform: uppercase;
+}
+
+.btn-cancel {
+    background: rgba(255, 255, 255, 0.05); color: white;
+    padding: 0.8rem 2rem; border-radius: 0.8rem;
+    font-weight: 800; font-size: 0.9rem; text-transform: uppercase;
+}
+
+.btn-cancel:hover { background: rgba(255, 255, 255, 0.1); }
+
+@media (max-width: 600px) {
+    .survival-timer-label { display: none; }
+    #survival-timer { font-size: 0.9rem; }
+    .stat-pill.balance { padding: 0.3rem 0.6rem; font-size: 0.8rem; }
+    .header-hud { gap: 0.5rem; }
+}
+
+/* BLACKJACK CONTROLS REFINEMENT */
+#bj-controls-bet {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+@media (max-width: 600px) {
+    #bj-controls-bet {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    #bj-controls-bet .input-group {
+        width: 100%;
+    }
+}
+
+/* GLOBAL PROGRESS FOOTER */
+.global-progress-footer {
+    margin-top: 6rem;
+    text-align: center;
+    border-top: 1px solid var(--glass-border);
+    padding: 4rem 1rem;
+}
+
+.progress-box {
+    display: inline-block;
+    background: var(--glass);
+    padding: 2rem 4rem;
+    border-radius: 2rem;
+    border: 1px solid var(--glass-border);
+    max-width: 90%;
+}
+
+.progress-label {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.3);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 1rem;
+}
+
+.progress-timer {
+    font-size: 2rem;
+    font-weight: 900;
+    color: white;
+}
+
+.progress-mult {
+    font-size: 0.9rem;
+    color: var(--gold);
+    margin-top: 0.5rem;
+}
 main {
     padding: 2rem;
     max-width: 1300px;
@@ -133,11 +343,57 @@ main {
     margin-bottom: 1rem;
 }
 
+.hero-subtitle {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+@media (max-width: 600px) {
+    .hero-subtitle {
+        font-size: 0.95rem;
+        padding: 0 1rem;
+    }
+}
+
 /* GRID DE JOGOS NO HUB */
 .hub-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-template-columns: 1fr;
     gap: 2rem;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+@media (min-width: 800px) {
+    .hub-grid {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 900px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .hub-grid {
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 100%;
+    }
+}
+
+.payout-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.7rem;
+    margin-bottom: 2rem;
+}
+
+@media (min-width: 900px) {
+    .payout-grid {
+        grid-template-columns: repeat(6, 1fr);
+    }
 }
 
 .game-card {
@@ -315,32 +571,36 @@ button {
     box-shadow: 0 0 100px rgba(0, 0, 0, 0.8), 0 0 50px rgba(212, 175, 55, 0.3);
 }
 
-.result-card h2 { font-size: 4rem; font-weight: 900; margin-bottom: 0.5rem; }
+.result-card h2 { font-size: 3rem; font-weight: 900; margin-bottom: 0.5rem; }
 .result-win h2 { color: var(--success); }
 .result-loss h2 { color: var(--danger); }
+
+@media (min-width: 768px) {
+    .result-card h2 { font-size: 4rem; }
+}
 
 /* SLOTS - ALAVANCA PREMIUM (ESTILO CASSINO REAL) */
 .lever-container { 
     position: relative; 
-    width: 100px; height: 260px; 
+    width: 80px; height: 220px; 
     cursor: pointer;
     perspective: 1000px;
     margin-left: 20px;
 }
 
 .lever-base {
-    width: 60px; height: 80px;
+    width: 50px; height: 70px;
     background: linear-gradient(135deg, #1e252b 0%, #4b5563 50%, #1e252b 100%);
-    position: absolute; bottom: 0; left: 20px;
+    position: absolute; bottom: 0; left: 15px;
     border-radius: 12px 12px 5px 5px;
     box-shadow: 0 10px 20px rgba(0,0,0,0.8), inset 0 2px 2px rgba(255,255,255,0.1);
     border: 2px solid #2d3436;
 }
 
 .lever-arm {
-    width: 20px; height: 160px;
+    width: 16px; height: 130px;
     background: linear-gradient(to right, #95a5a6, #ffffff, #7f8c8d);
-    position: absolute; top: 30px; left: 40px;
+    position: absolute; top: 30px; left: 32px;
     transform-origin: bottom center;
     transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     border-radius: 10px;
@@ -348,15 +608,15 @@ button {
 }
 
 .lever-knob {
-    width: 70px; height: 70px;
+    width: 55px; height: 55px;
     background: radial-gradient(circle at 35% 35%, #ff4757, #ff6b81, #ae1438);
     border-radius: 50%;
-    position: absolute; top: -35px; left: -25px;
+    position: absolute; top: -27px; left: -19px;
     box-shadow: 
-        0 10px 25px rgba(0, 0, 0, 0.7), 
+        0 8px 20px rgba(0, 0, 0, 0.7), 
         inset -5px -5px 15px rgba(0,0,0,0.6),
         inset 5px 5px 15px rgba(255,255,255,0.4);
-    border: 4px solid rgba(255,255,255,0.1);
+    border: 3px solid rgba(255,255,255,0.1);
 }
 
 .lever-container:active .lever-arm,
@@ -367,11 +627,20 @@ button {
 /* ROLETA - VISUAL E MESA */
 .roulette-container-row {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
-    gap: 5rem;
+    justify-content: center;
+    gap: 3rem;
     width: 100%;
+}
+
+@media (min-width: 1100px) {
+    .roulette-container-row {
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 5rem;
+    }
 }
 
 .roulette-visual {
@@ -448,10 +717,13 @@ button {
 
 .rl-main-grid {
     display: grid;
-    grid-template-columns: 50px repeat(12, 1fr) 60px;
+    grid-template-columns: 40px repeat(12, 1fr) 40px;
     grid-template-rows: repeat(3, 1fr);
     gap: 2px;
     background: #111; border: 2px solid #222;
+    width: 100%;
+    max-width: 800px;
+    overflow-x: auto;
 }
 
 .grid-cell {
@@ -467,10 +739,18 @@ button {
 .rl-outside-bets { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1rem; margin-top: 1rem; }
 
 .outside-bet {
-    padding: 1rem; background: var(--glass);
+    padding: 0.6rem; 
+    background: var(--glass);
     border: 1px solid var(--glass-border);
-    border-radius: 1rem; text-align: center;
+    border-radius: 0.8rem; text-align: center;
     font-weight: 800; cursor: pointer;
+    font-size: 0.75rem;
+    transition: all 0.2s;
+}
+
+.outside-bet:hover {
+    background: rgba(255,255,255,0.1);
+    transform: translateY(-2px);
 }
 
 .outside-bet.selected { border-color: var(--gold); background: rgba(212, 175, 55, 0.1); }
@@ -526,7 +806,20 @@ button {
 .modal-overlay.active .modal-content { transform: translateY(0); }
 
 /* ESTILO DAS CARTAS DO BLACKJACK */
-.card-slot { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; perspective: 1000px; }
+.card-slot { 
+    display: flex; 
+    justify-content: center; 
+    gap: 0.5rem; 
+    flex-wrap: nowrap; 
+    perspective: 1000px; 
+    padding: 1rem;
+    overflow-x: auto;
+    min-height: 160px;
+}
+
+.card:not(:first-child) {
+    margin-left: -40px; /* Efeito de cartas sobrepostas para economizar espaço */
+}
 
 .card {
     width: 100px; height: 140px;
@@ -560,8 +853,8 @@ button {
 
 /* SLOTS - ANIMAÇÃO DE BOBINAS */
 .reel-window {
-    width: 120px; height: 160px;
-    background: var(--navy); border: 3px solid var(--glass-border);
+    width: 140px; height: 180px;
+    background: var(--navy); border: 4px solid var(--glass-border);
     border-radius: 1.5rem; position: relative; overflow: hidden;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
@@ -583,9 +876,9 @@ button {
 }
 
 .reel-symbol {
-    height: 160px; width: 100%;
+    height: 180px; width: 100%;
     display: flex; align-items: center; justify-content: center;
-    font-size: 4rem; flex-shrink: 0;
+    font-size: 5rem; flex-shrink: 0;
 }
 
 @keyframes blurSpin {
@@ -608,11 +901,137 @@ button {
     to { transform: rotate(3600deg); }
 }
 
-/* RESPONSIVIDADE MOBILE */
-@media (max-width: 900px) {
-    .page-footer-container { flex-direction: column; }
-    .hero h1 { font-size: 3rem; }
-    .roulette-visual { width: 320px; height: 320px; }
-    .roulette-center { width: 100px; height: 100px; }
-    .rl-main-grid { transform: scale(0.8); transform-origin: top center; }
+/* TABLETS E TELAS MÉDIAS (1000px e abaixo) */
+@media (max-width: 1000px) {
+    header {
+        grid-template-columns: 1fr auto 1fr;
+        padding: 0.6rem 1rem;
+    }
+
+    .menu-toggle {
+        display: block;
+        cursor: pointer;
+    }
+
+    nav {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: rgba(10, 14, 26, 0.98);
+        backdrop-filter: blur(20px);
+        flex-direction: column;
+        padding: 1rem;
+        border-bottom: 2px solid var(--gold);
+        gap: 0.5rem;
+        z-index: 1001;
+    }
+
+    nav.active {
+        display: flex;
+    }
+
+    nav a {
+        width: 100%;
+        text-align: center;
+        padding: 1.2rem;
+        background: rgba(255,255,255,0.03);
+        font-size: 1rem;
+    }
+    
+    /* Remove o posicionamento absoluto do timer que causava overlap */
+    .survival-timer-container {
+        position: static;
+        transform: none;
+        background: none;
+        border: none;
+        padding: 0;
+    }
+
+    .hero h1 {
+        font-size: 3rem;
+    }
+
+    .glass-card {
+        padding: 1.5rem;
+    }
+
+    /* Roleta Responsiva */
+    .roulette-visual {
+        width: 300px;
+        height: 300px;
+        border-width: 15px;
+    }
+
+    .roulette-center {
+        width: 80px;
+        height: 80px;
+    }
+
+    .roulette-number-label {
+        height: 150px;
+        width: 22px;
+        left: calc(50% - 11px);
+        font-size: 0.7rem;
+    }
+    
+    .roulette-number-label.red { background: linear-gradient(to bottom, #cf4343 0%, #cf4343 35px, transparent 35px); }
+    .roulette-number-label.black { background: linear-gradient(to bottom, #212121 0%, #212121 35px, transparent 35px); }
+    .roulette-number-label.green { background: linear-gradient(to bottom, #27ae60 0%, #27ae60 35px, transparent 35px); }
+
+    .rl-main-grid {
+        transform: scale(0.65);
+        margin: -40px 0;
+    }
+
+    .rl-outside-bets {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    /* Slots Responsivos */
+    .lever-container {
+        display: none; /* Removido no mobile conforme pedido */
+    }
+
+    .reel-area {
+        justify-content: center;
+    }
+
+    .reel-window {
+        width: 100px;
+        height: 120px;
+    }
+
+    .reel-symbol {
+        height: 120px;
+        font-size: 3.8rem;
+    }
+
+    /* Blackjack Responsivo */
+    .card {
+        width: 65px;
+        height: 95px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .logo span { display: none; } /* Apenas ALPHA no mini-mobile */
+    
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .hub-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .hub-grid .game-card h3 {
+        font-size: 1.8rem;
+    }
+
+    .bet-controls {
+        flex-direction: column;
+    }
 }

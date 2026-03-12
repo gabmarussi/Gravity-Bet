@@ -49,7 +49,7 @@ const bj = {
     /**
      * Inicia a rodada coletando a aposta e distribuindo cartas
      */
-    deal: function () {
+    start: function () {
         const betValue = parseFloat(document.getElementById('bj-bet-input').value);
         if (betValue > AlphaEngine.balance || betValue <= 0) {
             AlphaEngine.addLog("SALDO INSUFICIENTE", "loss");
@@ -58,6 +58,7 @@ const bj = {
 
         AlphaEngine.startSurvivalTimer();
         AlphaEngine.updateBalance(-betValue);
+        AlphaEngine.playSound('chip');
 
         this.deck = this.createDeck();
         this.pHand = [this.deck.pop(), this.deck.pop()];
@@ -123,6 +124,7 @@ const bj = {
      */
     hit: function () {
         this.pHand.push(this.deck.pop());
+        AlphaEngine.playSound('chip');
         this.render(false);
         if (this.getVal(this.pHand) > 21) {
             this.end(false, "BURST!");
@@ -151,6 +153,10 @@ const bj = {
      * Finaliza a rodada, calcula prêmio e reseta UI após atraso
      */
     end: function (win, msg) {
+        // Desativa ações imediatamente para evitar bugs/exploits
+        document.getElementById('bj-controls-play').style.pointerEvents = 'none';
+        document.getElementById('bj-controls-play').style.opacity = '0.5';
+
         const betValue = parseFloat(document.getElementById('bj-bet-input').value);
         let winAmount = 0;
 
@@ -172,6 +178,8 @@ const bj = {
         setTimeout(() => {
             document.getElementById('bj-controls-bet').style.display = 'flex';
             document.getElementById('bj-controls-play').style.display = 'none';
+            document.getElementById('bj-controls-play').style.pointerEvents = 'auto'; // Reativa para a próxima
+            document.getElementById('bj-controls-play').style.opacity = '1';
             AlphaEngine.updateUI();
             AlphaEngine.checkBankruptcy();
         }, 1500);

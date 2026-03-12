@@ -11,30 +11,35 @@
 <body>
 
     <header>
+        <div class="menu-toggle" onclick="AlphaEngine.toggleMenu()">☰</div>
         <a href="index.html" class="logo">ALPHA <span>BET</span></a>
+        
+        <div class="header-hud">
+            <div class="survival-timer-container">
+                <div class="survival-timer-label">Survivor Time</div>
+                <div id="survival-timer">00:00:00</div>
+            </div>
+
+            <div class="stats-bar">
+                <div class="stat-pill balance">
+                    <span>💎</span>
+                    <span id="balance-display">0.00</span>
+                </div>
+            </div>
+        </div>
+
         <nav>
-            <a href="index.html" class="active-nav">Home</a>
+            <a href="index.html">Home</a>
             <a href="blackjack.html">Blackjack</a>
             <a href="slots.html">Slots</a>
             <a href="roulette.html">Roulette</a>
         </nav>
-        <div class="stats-bar">
-            <div class="stat-pill">
-                <span>🕒</span>
-                <span id="survival-timer">00:00:00</span>
-            </div>
-            <div class="stat-pill balance">
-                <span>💎</span>
-                <span id="balance-display">0.00</span>
-            </div>
-        </div>
     </header>
 
     <main>
         <section class="hero">
             <h1>THE ALPHA <span style="color: var(--gold);">SUITE</span></h1>
-            <p
-                style="color: rgba(255,255,255,0.4); font-size: 1.1rem; max-width: 600px; margin: 0 auto; line-height: 1.6;">
+            <p class="hero-subtitle">
                 Onde a elite testa seus limites. Um cassino virtual focado em sobrevivência,
                 onde seu tempo de jogo é a sua maior vantagem competitiva.
             </p>
@@ -78,16 +83,14 @@
             </a>
         </section>
 
-        <section
-            style="margin-top: 6rem; text-align: center; border-top: 1px solid var(--glass-border); padding-top: 4rem;">
-            <div
-                style="display: inline-block; background: var(--glass); padding: 2rem 4rem; border-radius: 2rem; border: 1px solid var(--glass-border);">
-                <p
-                    style="font-size: 0.8rem; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1rem;">
-                    Seu Progresso de Sobrevivência</p>
-                <div style="font-size: 2rem; font-weight: 900; color: white;" id="survival-timer-hero">00:00:00</div>
-                <p style="font-size: 0.9rem; color: var(--gold); margin-top: 0.5rem;">Multiplicador Global: <span
-                        id="survival-mult">1.00x</span></p>
+        <section class="global-progress-footer">
+            <div class="progress-box">
+                <p class="progress-label">Seu Progresso de Sobrevivência</p>
+                <div class="progress-timer" id="survival-timer-hero">00:00:00</div>
+                <p class="progress-mult">Multiplicador Global: <span id="survival-mult">1.00x</span></p>
+                <p style="margin-top: 1.5rem; opacity: 1;">
+                    <span class="reset-link-text" onclick="AlphaEngine.showConfirmModal('Reiniciar Jogo/Tempo', 'Tem certeza que deseja zerar todo o seu progresso de sobrevivência e saldo?', () => AlphaEngine.resetGame())">Reiniciar o Jogo/Tempo</span>
+                </p>
             </div>
         </section>
     </main>
@@ -102,6 +105,18 @@
                 style="font-family: 'JetBrains Mono', monospace; font-size: 3rem; color: white; margin-bottom: 2rem;">
                 00:00:00</div>
             <button onclick="AlphaEngine.resetGame()" class="btn-main">Reiniciar</button>
+        </div>
+    </div>
+
+    <!-- Custom Confirm Modal -->
+    <div id="custom-confirm-modal" class="confirm-modal-overlay">
+        <div class="confirm-modal-content">
+            <h3 class="confirm-modal-title">Reiniciar Jogo?</h3>
+            <p class="confirm-modal-text">Seu progresso será perdido para sempre.</p>
+            <div class="confirm-btn-group">
+                <button class="btn-cancel">Cancelar</button>
+                <button class="btn-confirm">Reiniciar</button>
+            </div>
         </div>
     </div>
 

@@ -76,6 +76,7 @@ const roulette = {
         const display = document.getElementById('current-bet-display');
         display.textContent = `Aposta selecionada: ${type} (PRÊMIO: ${this.getMult(type)}x)`;
         
+        AlphaEngine.playSound('chip');
         AlphaEngine.addLog(`Tipo de aposta selecionado: ${type}`);
     },
 
@@ -141,6 +142,15 @@ const roulette = {
         
         ball.style.transition = 'transform 5s cubic-bezier(0.1, 0, 0.2, 1)';
         ball.style.transform = `rotate(${ballTargetRotation}deg) translateY(-160px)`;
+
+        // Som rítmico de giro da roleta
+        const rouletteSound = setInterval(() => {
+            if(!this.isSpinning) {
+                clearInterval(rouletteSound);
+                return;
+            }
+            AlphaEngine.playSound('spin');
+        }, 200);
 
         resElem.textContent = "?";
 

@@ -11,7 +11,7 @@ const slots = {
     multiplier: 1,
 
     init() {
-        console.log("Subsistema de Slots Ativo");
+        console.log("Alpha Slots Engine V4.0 - Ready");
     },
 
     /**
@@ -64,6 +64,7 @@ const slots = {
         // Animação da alavanca (pull-down)
         const container = document.querySelector('.lever-container');
         container.classList.add('pulling');
+        AlphaEngine.playSound('chip');
         setTimeout(() => container.classList.remove('pulling'), 500);
 
         const reels = [
@@ -93,12 +94,22 @@ const slots = {
             r.strip.offsetHeight; // Forçar o reflow do elemento
 
             // Realiza a animação de rotação vertical das bobinas
-            const symbolHeight = 160;
+            // Detecta dinamicamente a altura do símbolo para garantir centralização perfeita (Desktop/Mobile)
+            const symbolHeight = r.strip.querySelector('.reel-symbol').offsetHeight || 160;
             const targetY = -(stripSymbols.length - 1) * symbolHeight;
             
             setTimeout(() => {
                 r.strip.style.transition = `transform ${2 + i * 0.5}s cubic-bezier(0.45, 0.05, 0.55, 0.95)`;
                 r.strip.style.transform = `translateY(${targetY}px)`;
+                
+                // Tique sonoro rítmico
+                const soundInterval = setInterval(() => {
+                    if(!r.window.classList.contains('spinning')) {
+                        clearInterval(soundInterval);
+                        return;
+                    }
+                    AlphaEngine.playSound('spin');
+                }, 150);
             }, 50);
         });
 

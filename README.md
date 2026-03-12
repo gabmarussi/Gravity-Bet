@@ -1,62 +1,41 @@
-# 🎰 Alpha-Bet | Premium Survival Casino
+# Alpha Bet - Survival Gambling Suite 💎🎰
 
-Este projeto foi desenvolvido como parte de uma avaliação acadêmica, apresentando um ecossistema de cassino virtual moderno e imersivo, focado na experiência do usuário e em mecânicas de "sobrevivência".
+Alpha Bet é uma experiência de cassino premium focada em **sobrevivência**. O objetivo não é apenas ganhar dinheiro, mas resistir ao tempo enquanto o multiplicador global aumenta seus ganhos (e riscos).
 
----
+### 📱 Responsividade Total
+- **Mobile First**: O site é totalmente jogável em celulares, tablets e desktops.
+- **Menu Inteligente**: Implementação de um menu hambúrguer dinâmico para telas pequenas.
+- **HUD Sincronizado**: O cronômetro de sobrevivência e o saldo são exibidos no centro do menu bar em todas as páginas.
+- **Slots Flexíveis**: Bobinas e símbolos redimensionados automaticamente para melhor visibilidade em qualquer tela.
 
-## 👤 Informações Acadêmicas
-- **Nome:** Gabriel Henrique Coelho Marussi
-- **RA:** 24026609
-- **Graduação:** Fundação Escola de Comércio Álvares Penteado (FECAP)
-- **Matéria:** Projeto Interdisciplinar: Inteligência Artificial
-- **Professor:** [Rafael Rossetti](https://github.com/prof-rossetti)
+### 🎮 Jogabilidade Refinada
+- **Blackjack VIP**:
+    - Correção de falha de segurança que permitia jogadas após o fim da rodada.
+    - Sistema de empilhamento de cartas (stacking) para economizar espaço em mãos longas.
+    - Controles de aposta otimizados para toque.
+- **Mega Slots**:
+    - Alavanca com animação mecânica fluida (oculta no mobile para melhor ergonomia).
+    - Janelas de visualização ampliadas para uma experiência imersiva de cassino real.
+    - Modo **Auto Bet** inteligente.
+- **Roulette Royale**:
+    - Correção visual das cores da roleta em dispositivos móveis.
+    - Ajuste de botões de aposta para evitar rolagem excessiva de tela.
+    - Animação de bola e roda sincronizada para para a esquerda/direita simultaneamente.
 
----
+### 🛡️ Segurança e Integridade
+- **Sistema Anti-Cheating**: Implementação de assinatura de dados (Checksum). Alterações manuais no saldo via console ou LocalStorage são detectadas e o progresso é resetado para evitar burlas.
+- **Ofuscação de Dados**: Chaves de salvamento seguras e mascaradas.
+- **Reset Consciente**: Botão de reinicialização discreto localizado no rodapé de progresso, com modal de confirmação premium customizado.
 
-## 🚀 Sobre o Projeto
-O **Alpha-Bet Suite** redefine a experiência de jogos de sorte com um conceito de **Survival Gambling**. 
+### 🔈 Som e Experiência
+- **Advanced Audio Engine**: Motor de áudio nativo que gera sons de vitória, derrota, fichas e giros mecanicamente, sem a necessidade de baixar arquivos externos pesados.
+- **Glassmorphism Design**: Estética moderna com transparências, sombras suaves e bordas iluminadas.
+- **Custom Scrollbar**: Barra de rolagem estilizada para manter a imersão em todo o projeto.
 
-No Alpha-Bet, seu saldo não é apenas dinheiro; é sua energia de sobrevivência. Quanto mais tempo você permanece ativo no cassino sem zerar seu saldo, maior se torna seu **Multiplicador de Sobrevivência**, que potencializa todos os seus ganhos futuros. É um teste de estratégia, gestão de banca e resistência.
-
-### Jogos Incluídos:
-1.  **Blackjack VIP:** Um duelo clássico 21 contra a casa com interface de cartas reais.
-2.  **Mega Slots:** Máquina de bobinas com animações fluidas e multiplicadores progressivos.
-3.  **Roulette Royale:** Roleta europeia completa com mesa de apostas avançada (Racetrack).
-
----
-
-## 💻 Tecnologias Utilizadas
-- **Linguagem:** JavaScript (ES6+) Puro
-- **Estruturação:** HTML5 Semântico
-- **Estilização:** CSS3 Moderno (Glassmorphism, Flexbox, Grid, Animações @keyframes)
-- **Persistência de Dados:** LocalStorage (salva seu saldo e tempo automaticamente)
-- **Áudio:** Web Audio API (Sintetizador de sons via código)
-
-### Hospedagem
-O projeto é estático e pode ser hospedado facilmente em serviços como:
-- **GitHub Pages** (Recomendado para integração direta)
-- **Vercel**
-- **Netlify**
-
----
-
-## 🔍 O Que Falta (Oportunidades Futuras)
-Embora a suíte esteja funcional e polida, as seguintes melhorias poderiam elevar o projeto a um nível profissional:
-- **Leaderboard Global:** Integração com um banco de dados (Firebase/Supabase) para exibir os maiores sobreviventes.
-- **Achievements:** Sistema de medalhas para marcos (ex: "Sobreviveu por 1 hora", "Fez 3 Blackjacks seguidos").
-- **Trilha Sonora:** Implementação de músicas de fundo dinâmicas que mudam conforme o risco da aposta.
-- **Novos Jogos:** Adição de Poker Texas Hold'em e Jogos de Dados (Craps).
-- **Sistema de Níveis:** Progressão de conta que desbloqueia mesas com apostas mínimas maiores e designs exclusivos.
+## 🛠️ Tecnologias Utilizadas
+- **HTML5 Semântico**
+- **Vanilla CSS3** (Flexbox, Grid, Animações complexas)
+- **JavaScript Moderno** (Web Audio API, LocalStorage Security, Event Delegation)
 
 ---
-
-### 🎮 Como Jogar
-Você pode experienciar o **Alpha-Bet** de duas formas:
-
-**1. Acesso Web (Recomendado):**
-* Acesse diretamente pelo link: [https://gabmarussi.github.io/Alpha-Bet/index.html](https://gabmarussi.github.io/Alpha-Bet/index.html)
-
-**2. Execução Local:**
-1. Clone este repositório.
-2. Abra o arquivo `index.html` em qualquer navegador moderno.
-3. Não são necessárias dependências externas ou instaladores.
+*Alpha Bet - Onde a sorte favorece os que sobrevivem.*
