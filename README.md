@@ -45,3 +45,7 @@ Alpha Bet is a premium browser casino experience built around one core idea: **s
 ---
 
 Alpha Bet - Where luck rewards the survivors.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
