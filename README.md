@@ -1,41 +1,47 @@
-# Alpha Bet - Survival Gambling Suite 💎🎰
+# Alpha Bet - Survival Gambling Suite
 
-Alpha Bet é uma experiência de cassino premium focada em **sobrevivência**. O objetivo não é apenas ganhar dinheiro, mas resistir ao tempo enquanto o multiplicador global aumenta seus ganhos (e riscos).
+Alpha Bet is a premium browser casino experience built around one core idea: **survival**. The goal is not only to make money, but to stay alive long enough while a global multiplier increases both your rewards and your risk.
 
-### 📱 Responsividade Total
-- **Mobile First**: O site é totalmente jogável em celulares, tablets e desktops.
-- **Menu Inteligente**: Implementação de um menu hambúrguer dinâmico para telas pequenas.
-- **HUD Sincronizado**: O cronômetro de sobrevivência e o saldo são exibidos no centro do menu bar em todas as páginas.
-- **Slots Flexíveis**: Bobinas e símbolos redimensionados automaticamente para melhor visibilidade em qualquer tela.
+## Full Responsiveness
 
-### 🎮 Jogabilidade Refinada
+- **Mobile-first** gameplay for phones, tablets, and desktop.
+- **Smart navigation** with a dynamic hamburger menu on small screens.
+- **Synchronized HUD** showing survival timer and balance in the menu bar across all pages.
+- **Flexible slots layout** with reels and symbols that resize automatically for better visibility.
+
+## Refined Gameplay
+
 - **Blackjack VIP**:
-    - Correção de falha de segurança que permitia jogadas após o fim da rodada.
-    - Sistema de empilhamento de cartas (stacking) para economizar espaço em mãos longas.
-    - Controles de aposta otimizados para toque.
+  - Security fix for post-round action exploits.
+  - Card stacking system to save space in long hands.
+  - Touch-optimized betting controls.
 - **Mega Slots**:
-    - Alavanca com animação mecânica fluida (oculta no mobile para melhor ergonomia).
-    - Janelas de visualização ampliadas para uma experiência imersiva de cassino real.
-    - Modo **Auto Bet** inteligente.
+  - Smooth mechanical lever animation (hidden on mobile for better ergonomics).
+  - Expanded viewport windows for a more immersive casino feel.
+  - Intelligent **Auto Bet** mode.
 - **Roulette Royale**:
-    - Correção visual das cores da roleta em dispositivos móveis.
-    - Ajuste de botões de aposta para evitar rolagem excessiva de tela.
-    - Animação de bola e roda sincronizada para para a esquerda/direita simultaneamente.
+  - Mobile color rendering fixes for roulette pockets.
+  - Betting button adjustments to reduce unnecessary vertical scrolling.
+  - Synchronized wheel and ball animation for left/right movement.
 
-### 🛡️ Segurança e Integridade
-- **Sistema Anti-Cheating**: Implementação de assinatura de dados (Checksum). Alterações manuais no saldo via console ou LocalStorage são detectadas e o progresso é resetado para evitar burlas.
-- **Ofuscação de Dados**: Chaves de salvamento seguras e mascaradas.
-- **Reset Consciente**: Botão de reinicialização discreto localizado no rodapé de progresso, com modal de confirmação premium customizado.
+## Security and Integrity
 
-### 🔈 Som e Experiência
-- **Advanced Audio Engine**: Motor de áudio nativo que gera sons de vitória, derrota, fichas e giros mecanicamente, sem a necessidade de baixar arquivos externos pesados.
-- **Glassmorphism Design**: Estética moderna com transparências, sombras suaves e bordas iluminadas.
-- **Custom Scrollbar**: Barra de rolagem estilizada para manter a imersão em todo o projeto.
+- **Anti-cheat system** with data signatures (checksum). Manual balance edits through console or LocalStorage are detected and progress is reset.
+- **Data obfuscation** with secure, masked save keys.
+- **Safe reset flow** with a discreet footer reset button and a custom confirmation modal.
 
-## 🛠️ Tecnologias Utilizadas
-- **HTML5 Semântico**
-- **Vanilla CSS3** (Flexbox, Grid, Animações complexas)
-- **JavaScript Moderno** (Web Audio API, LocalStorage Security, Event Delegation)
+## Sound and Visual Experience
+
+- **Advanced audio engine** that synthesizes win/loss/chip/spin sounds natively, without heavy external audio files.
+- **Glassmorphism-inspired UI** with transparency, soft shadows, and highlighted borders.
+- **Custom scrollbar styling** to maintain visual consistency and immersion.
+
+## Tech Stack
+
+- Semantic HTML5
+- Vanilla CSS3 (Flexbox, Grid, advanced animations)
+- Modern JavaScript (Web Audio API, LocalStorage security, event delegation)
 
 ---
-*Alpha Bet - Onde a sorte favorece os que sobrevivem.*
+
+Alpha Bet - Where luck rewards the survivors.
